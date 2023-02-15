@@ -1,16 +1,19 @@
-import './App.css';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Navigate } from 'react-router-dom';
+
+import {
+  useNavigate
+} from "react-router-dom";
 
 function Login() {
+
+  const navigate = useNavigate();
 
   const[name, setName] = useState(); 
   const[password, setPassword] = useState(); 
   const[result, setResult] = useState(); 
 
   const myButtonClick = async () => {
-    //alert("Kullanıcı Adı: " + name + " Şifre: " +password);
 
     let requestBody = {
       service_val_name:name,
@@ -22,28 +25,22 @@ function Login() {
       requestBody
     );
 
-
-    //console.log("Request:" + JSON.stringify(requestBody) );
-    //console.log("Response:" + JSON.stringify(response.data.result));
     
+    // console.log("Request:" + JSON.stringify(requestBody) );
+    // console.log("Respone:" + JSON.stringify(response.data.result));
+
     if (response.data.result=="success") {
           setResult("Giriş Başarılı");
-          localStorage.setItem("UserName" , name)
-          Navigate('/Musteri' , {replace : true});
+
+        localStorage.setItem("userName", name)
+        navigate('/Musteri', { replace: true });
 
     } else {
           setResult("Hatalı kullanıcı adı veya şifre");
     }
+    
     console.log("Resp:" + result);
-    //alert(result);
-
-    // if (response.data.result=="success") {
-    //   localStorage.setItem("userName", "onurkulabas")
-    //   navigate('/secret-page', { replace: true });
-    // } else {
-    //   setResult('Hatalı Kullanıcı Adı veya Şifre');
-    // }
-
+   
 }
   return (
   

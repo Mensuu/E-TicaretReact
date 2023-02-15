@@ -1,6 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
+import {Link, useNavigate} from "react-router-dom";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
@@ -9,7 +10,15 @@ import Footer from "./Components/Footer";
 
 function UrunKategorisi() {
   const [allProductCategorys, setAllProductCategorys] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
+
+    if (!localStorage.getItem("userName"))
+    {
+      navigate('/Login', {replace: true});
+    }
+   
     const getAllProductCategoryInfo = async () => {
       let response = await axios.get(
         'https://private-a42220-urunkategorisi.apiary-mock.com/UrunKategorisi'

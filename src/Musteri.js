@@ -1,32 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
 import React, { useEffect, useState } from "react";
+import {Link, useNavigate} from "react-router-dom";
+
+import axios from "axios";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
 
-
-
 function Musteri() {
+  const navigate = useNavigate();
 
-  const [allCustomers, setAllCustomers] = useState([]);
+  const[allCustomers, setAllCustomers] = useState([]);
+
   useEffect(() => {
+
+    if (!localStorage.getItem("userName"))
+    {
+      navigate('/Login', {replace: true});
+    }
+   
     const getAllCustomerInfo = async () => {
-      let response = await axios.get(
-        'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
-      );
+        let response = await axios.get(
+            'https://private-dfab49-nursenozcan.apiary-mock.com/Musteri'
+            );
+    
+            //console.log("getAllUserInfo" + response.data.MusteriListesi);
 
-      console.log("getAllCustomerInfo" + response.data.MusteriListesi);
-
-      setAllCustomers(response.data.MusteriListesi);
+            setAllCustomers(response.data.MusteriListesi);
 
     }
 
     // call the function
     getAllCustomerInfo().catch(console.error);
-
+ 
   }, [])
+
 
   return (
 
