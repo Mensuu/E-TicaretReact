@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Navigate } from 'react-router-dom';
 
 function Login() {
 
@@ -27,6 +28,8 @@ function Login() {
     
     if (response.data.result=="success") {
           setResult("Giriş Başarılı");
+          localStorage.setItem("UserName" , name)
+          Navigate('/Musteri' , {replace : true});
 
     } else {
           setResult("Hatalı kullanıcı adı veya şifre");
