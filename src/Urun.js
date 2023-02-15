@@ -12,7 +12,7 @@ function Urun() {
   useEffect(() => {
     const getAllProductInfo = async () => {
       let response = await axios.get(
-        'https://private-b49dc1-urun3.apiary-mock.com/urun'
+        'https://private-b49dc1-urun3.apiary-mock.com/Urun'
       );
 
       console.log("getAllProductInfo" + response.data.ProductList);

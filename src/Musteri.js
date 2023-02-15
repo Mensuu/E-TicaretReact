@@ -14,7 +14,7 @@ function Musteri() {
   useEffect(() => {
     const getAllCustomerInfo = async () => {
       let response = await axios.get(
-        'https://private-b305d-meneksecorum.apiary-mock.com/musteri'
+        'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
       );
 
       console.log("getAllCustomerInfo" + response.data.MusteriListesi);
