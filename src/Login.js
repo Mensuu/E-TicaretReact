@@ -161,51 +161,51 @@ function Login() {
     {/* END FORGOT PASSWORD FORM */}
     {/* BEGIN REGISTRATION FORM */}
     <form className="register-form" action="index.html" method="post">
-      <h3>Sign Up</h3>
-      <p className="hint">Enter your personal details below:</p>
+      <h3>Üye olmak</h3>
+      <p className="hint">Kişisel bilgilerinizi aşağıya girin:</p>
       <div className="form-group">
         <label className="control-label visible-ie8 visible-ie9">
-          Full Name
+          Tam Adı
         </label>
         <input
           className="form-control placeholder-no-fix"
           type="text"
-          placeholder="Full Name"
+          placeholder="Tam Adı"
           name="fullname"
         />
       </div>
       <div className="form-group">
         {/*ie8, ie9 does not support html5 placeholder, so we just show field title for that*/}
-        <label className="control-label visible-ie8 visible-ie9">Email</label>
+        <label className="control-label visible-ie8 visible-ie9">E-Posta</label>
         <input
           className="form-control placeholder-no-fix"
           type="text"
-          placeholder="Email"
+          placeholder="E-Posta"
           name="email"
         />
       </div>
       <div className="form-group">
-        <label className="control-label visible-ie8 visible-ie9">Address</label>
+        <label className="control-label visible-ie8 visible-ie9">Adres</label>
         <input
           className="form-control placeholder-no-fix"
           type="text"
-          placeholder="Address"
+          placeholder="Adres"
           name="address"
         />
       </div>
       <div className="form-group">
         <label className="control-label visible-ie8 visible-ie9">
-          City/Town
+          Şehir
         </label>
         <input
           className="form-control placeholder-no-fix"
           type="text"
-          placeholder="City/Town"
+          placeholder="Şehir"
           name="city"
         />
       </div>
       <div className="form-group">
-        <label className="control-label visible-ie8 visible-ie9">Country</label>
+        <label className="control-label visible-ie8 visible-ie9">Ülke</label>
         <select name="country" className="form-control">
           <option value="">Country</option>
           <option value="AF">Afghanistan</option>
@@ -446,49 +446,49 @@ function Login() {
           <option value="ZW">Zimbabwe</option>
         </select>
       </div>
-      <p className="hint">Enter your account details below:</p>
+      <p className="hint">Hesap ayrıntılarınızı aşağıya girin:</p>
       <div className="form-group">
         <label className="control-label visible-ie8 visible-ie9">
-          Username
+          Kullanıcı Adı
         </label>
         <input
           className="form-control placeholder-no-fix"
           type="text"
           autoComplete="off"
-          placeholder="Username"
+          placeholder="Kullanıcı Adı"
           name="username"
         />
       </div>
       <div className="form-group">
         <label className="control-label visible-ie8 visible-ie9">
-          Password
+          Şifre
         </label>
         <input
           className="form-control placeholder-no-fix"
           type="password"
           autoComplete="off"
           id="register_password"
-          placeholder="Password"
+          placeholder="Şifre"
           name="password"
         />
       </div>
       <div className="form-group">
         <label className="control-label visible-ie8 visible-ie9">
-          Re-type Your Password
+        Parolanızı yeniden yazın
         </label>
         <input
           className="form-control placeholder-no-fix"
           type="password"
           autoComplete="off"
-          placeholder="Re-type Your Password"
+          placeholder="Parolanızı yeniden yazın"
           name="rpassword"
         />
       </div>
       <div className="form-group margin-top-20 margin-bottom-20">
         <label className="check">
-          <input type="checkbox" name="tnc" /> I agree to the{" "}
-          <a href="javascript:;">Terms of Service </a>
-          &amp; <a href="javascript:;">Privacy Policy </a>
+          <input type="checkbox" name="tnc" /> Katılıyorum{" "}
+          <a href="javascript:;">Kullanım Şartları </a>
+          &amp; <a href="javascript:;">Gizlilik Politikası </a>
         </label>
         <div id="register_tnc_error"></div>
       </div>
@@ -498,14 +498,14 @@ function Login() {
           id="register-back-btn"
           className="btn btn-default"
         >
-          Back
+          Geri
         </button>
         <button
           type="submit"
           id="register-submit-btn"
           className="btn btn-success uppercase pull-right"
         >
-          Submit
+          Kaydet
         </button>
       </div>
     </form>
