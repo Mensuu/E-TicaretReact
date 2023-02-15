@@ -329,7 +329,7 @@ function Odeme() {
                         <th>Kime</th>
                         <th>Ödeme Tarihi</th>
                         <th>Para Birimi</th>
-                        <th>Toplam Tutar</th>
+                        <th align="right">Toplam Tutar</th>
                         <th>Ödeme Kanalı</th>
                         <th>Açıklama</th>
                       </tr>
