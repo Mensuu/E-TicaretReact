@@ -304,7 +304,7 @@ function Odeme() {
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="odeme_liste.html">Liste</a>
+            <a href="/Odeme">Liste</a>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}

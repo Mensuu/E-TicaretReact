@@ -204,7 +204,7 @@ function Urun() {
                   <i className="fa fa-circle" />
                 </li>
                 <li>
-                  <a href="urun_liste.html">LİSTE</a>
+                  <a href="/Urun">LİSTE</a>
                   <i className="fa fa-circle" />
                 </li>
               </ul>

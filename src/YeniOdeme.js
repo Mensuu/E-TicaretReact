@@ -1,16 +1,46 @@
 import './App.css';
-import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
+
+import axios from "axios";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
 
-
-
-function UrunKategorisi() {
-  const [allProductCategorys, setAllProductCategorys] = useState([]);
+function YeniOdeme() {
+  const [allNewPayments, setAllNewPayments] = useState([]);
   const navigate = useNavigate();
+
+  const[toWho, setToWho] = useState([]);
+  const[paymentDate, setPaymentDate] = useState([]);
+  const[currency, setCurrency] = useState([]);
+  const[totalAmount, setTotalAmount] = useState([]);
+  const[paymentChannel, setPaymentChannel] = useState([]);
+  const[explanation, setExplanation] = useState([]);
+
+  const myButtonClick = async() => {
+    
+    let requestBody = {
+      Kime:toWho,
+      OdemeTarihi:paymentDate,
+      ParaBirimi:currency,
+      ToplamTutar:totalAmount,
+      OdemeKanalı:paymentChannel,
+      Acıklama:explanation
+    }
+
+    const response = await axios.post (
+      'https://private-67bb4c-odeme.apiary-mock.com/Odeme',
+      requestBody
+    );
+
+    //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
+
+    let data = response.data.message;
+    alert(data);
+    navigate('/Odeme' , {replace : true});
+
+  }
 
   useEffect(() => {
 
@@ -18,29 +48,31 @@ function UrunKategorisi() {
     {
       navigate('/Login', {replace: true});
     }
-   
-    const getAllProductCategoryInfo = async () => {
+    
+    const getAllNewPaymentInfo = async () => {
       let response = await axios.get(
-        'https://private-a42220-urunkategorisi.apiary-mock.com/UrunKategorisi'
+        'https://private-67bb4c-odeme.apiary-mock.com/Odeme'
       );
 
-      console.log("getAllProductCategoryInfo" + response.data.ProductCategoryList);
+      console.log("getAllNewPaymentInfo" + response.data.NewPaymentList);
 
-      setAllProductCategorys(response.data.ProductCategoryList);
+      setAllNewPayments(response.data.NewPaymentList);
 
     }
 
     // call the function
-    getAllProductCategoryInfo().catch(console.error);
+    getAllNewPaymentInfo().catch(console.error);
 
   }, [])
+
+
   return (
-  
-   <>
 
-  <Header />
+    <>
 
-  {/* BEGIN PAGE CONTAINER */}
+      <Header />
+
+        {/* BEGIN PAGE CONTAINER */}
   <div className="page-container">
     {/* BEGIN PAGE HEAD */}
     <div className="page-head">
@@ -48,7 +80,7 @@ function UrunKategorisi() {
         {/* BEGIN PAGE TITLE */}
         <div className="page-title">
           <h1>
-            Ürün Kategorisi <small>Liste</small>
+            Ödeme <small>Yeni Kayıt </small>
           </h1>
         </div>
         {/* END PAGE TITLE */}
@@ -296,68 +328,166 @@ function UrunKategorisi() {
         {/* BEGIN PAGE BREADCRUMB */}
         <ul className="page-breadcrumb breadcrumb">
           <li>
-            <a href="#">Ekran İçerikleri</a>
+            <a href="#">Operasyon</a>
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="#">Ürün Kategorisi</a>
+            <a href="#">Ödeme</a>
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="/UrunKategorisi">Liste</a>
+            <a href="/YeniOdeme">Yeni Ödeme</a>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}
         {/* BEGIN PAGE CONTENT INNER */}
         <div className="row">
           <div className="col-md-12">
-            {/* <div class="note note-success note-bordered">
-						<p>
-							 Please try to re-size your browser window in order to see the tables in responsive mode.
-						</p>
-					</div> */}
-            {/* BEGIN SAMPLE TABLE PORTLET*/}
+            {/* BEGIN SAMPLE FORM PORTLET*/}
             <div className="portlet light">
               <div className="portlet-title">
-                <div className="caption">
-                  <i className="fa fa-cogs font-green-sharp" />
-                  <span className="caption-subject font-green-sharp bold uppercase">
-                    ÜRÜN KATEGORİSİ lİSTESİ
-                  </span>
+                <div className="caption font-green-haze">
+                  {/* <i class="icon-settings font-green-haze"></i>
+								<span class="caption-subject bold uppercase"> Horizontal Form</span> */}
                 </div>
-                <div className="tools">
-                  <a href="javascript:;" className="collapse"></a>
+                <div className="actions">
+                  {/* <a class="btn btn-circle btn-icon-only blue" href="javascript:;">
+								<i class="icon-cloud-upload"></i>
+								</a>
+								<a class="btn btn-circle btn-icon-only green" href="javascript:;">
+								<i class="icon-wrench"></i>
+								</a>
+								<a class="btn btn-circle btn-icon-only red" href="javascript:;">
+								<i class="icon-trash"></i> */}
+                  <a
+                    className="btn btn-circle btn-icon-only btn-default fullscreen"
+                    href="javascript:;"
+                    data-original-title=""
+                    title=""
+                  ></a>
                 </div>
               </div>
-              <div className="portlet-body">
-                <div className="table-responsive">
-                  <table className="table table-striped table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Ürün Kategorisi</th>
-                        <th>Ana Kategori</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {
-                            allProductCategorys.map((data) => (
-                              <>
-                                <tr>
-                                  <td></td>
-                                  <td>{data.UrunKategorisi}</td>
-                                  <td>{data.AnaKategori}</td>
-                                </tr>
-                              </>
-                            )
-                            )
-                          }
-                    </tbody>
-                  </table>
-                </div>
+              <div className="portlet-body form">
+                <form role="form" className="form-horizontal">
+                  <div className="form-body">
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="form_control_1"
+                        onChange={e => setToWho(e.target.value)}
+                      >
+                        Kime
+                      </label>
+                      <div className="col-md-10">
+                        <select className="form-control" id="form_control_1" >
+                          <option value="">Lütfen seçiniz..</option>
+                          <option value="">Müşteri 1</option>
+                          <option value="">Müşteri 2</option>
+                          <option value="">Müşteri 3</option>
+                          <option value="">Müşteri 4</option>
+                        </select>
+                        <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="form_control_1"
+                      >
+                        Tutar
+                      </label>
+                      <div className="col-md-10">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="form_control_1"
+                        />
+                        <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="form_control_1"
+                      >
+                        Para Birimi
+                      </label>
+                      <div className="col-md-10">
+                        <select className="form-control" id="form_control_1">
+                          <option value="">Lütfen seçiniz..</option>
+                          <option value="">TRY</option>
+                          <option value="">EUR</option>
+                          <option value="">USD</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="form_control_1"
+                      >
+                        Ödeme Tarihi
+                      </label>
+                      <div className="col-md-10">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="form_control_1"
+                          placeholder="GG/AA/YYYY"
+                        />
+                        <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="form_control_1"
+                      >
+                        Ödeme Kanalı
+                      </label>
+                      <div className="col-md-10">
+                        <select className="form-control" id="form_control_1">
+                          <option value="">Lütfen seçiniz..</option>
+                          <option value="">Kredi kartı</option>
+                          <option value="">Banka Havale/EFT</option>
+                          <option value="">Çek</option>
+                          <option value="">Senet</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input has-success">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="form_control_1"
+                      >
+                        Açıklama
+                      </label>
+                      <div className="col-md-10">
+                        <textarea
+                          className="form-control"
+                          rows={3}
+                          defaultValue={""}
+                        />
+                        <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-actions">
+                    <div className="row">
+                      <div className="col-md-offset-2 col-md-10">
+                        <button type="button" className="btn blue">
+                          Kaydet
+                        </button>
+                        <button type="button" className="btn default">
+                          Vazgeç
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
-            {/* END SAMPLE TABLE PORTLET*/}
+            {/* END SAMPLE FORM PORTLET*/}
           </div>
         </div>
         {/* END PAGE CONTENT INNER */}
@@ -366,11 +496,11 @@ function UrunKategorisi() {
     {/* END PAGE CONTENT */}
   </div>
   {/* END PAGE CONTAINER */}
-  <Footer/> 
+      <Footer />
 
-</>
+    </>
 
   );
 }
 
-export default UrunKategorisi;
+export default YeniOdeme;

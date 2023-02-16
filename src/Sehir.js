@@ -9,7 +9,7 @@ import Footer from "./Components/Footer";
 
 
 function Sehir() {
-  const [allCitys, setAllCitys] = useState([]);
+  const [allCities, setAllCities] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function Sehir() {
 
       console.log("getAllCityInfo" + response.data.CityList);
 
-      setAllCitys(response.data.CityList);
+      setAllCities(response.data.CityList);
 
     }
 
@@ -304,7 +304,7 @@ function Sehir() {
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="sehir_liste.html">Liste</a>
+            <a href="/Sehir">Liste</a>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}
@@ -340,7 +340,7 @@ function Sehir() {
                   </thead>
                   <tbody>
                   {
-                            allCitys.map((data) => (
+                            allCities.map((data) => (
                               <>
                                 <tr>
                                   <td></td>

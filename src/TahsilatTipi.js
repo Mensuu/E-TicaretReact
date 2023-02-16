@@ -304,7 +304,7 @@ function TahsilatTipi() {
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="tahsilattipi_liste.html">Liste</a>
+            <a href="/TahsilatTipi">Liste</a>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}

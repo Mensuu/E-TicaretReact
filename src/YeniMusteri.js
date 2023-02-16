@@ -1,16 +1,49 @@
 import './App.css';
-import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
+
+import axios from "axios";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
 
-
-
-function UrunKategorisi() {
-  const [allProductCategorys, setAllProductCategorys] = useState([]);
+function YeniMusteri() {
   const navigate = useNavigate();
+
+  const[name, setName] = useState([]);
+  const[surname, setSurname] = useState([]);
+  const[birthday, setBirthday] = useState([]);
+  const[gender, setGender] = useState([]);
+  const[address, setAddress] = useState([]);
+  const[city, setCity] = useState([]);
+
+  const[cities, setCities] = useState([]);
+ 
+  const myButtonClick = async() => {
+    
+    let requestBody = {
+      MusteriAdi:name,
+      MusteriSoyadi:surname,
+      DogumTarihi:birthday,
+      Cinsiyet:gender,
+      Adres:address,
+      Sehir:city
+    }
+
+    const response = await axios.post (
+      'https://private-b305d-meneksecorum.apiary-mock.com/Musteri',
+      requestBody
+    );
+
+
+    //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
+
+    let data = response.data.message;
+    alert(data);
+    navigate('/Musteri' , {replace : true});
+
+
+  }
 
   useEffect(() => {
 
@@ -18,29 +51,31 @@ function UrunKategorisi() {
     {
       navigate('/Login', {replace: true});
     }
-   
-    const getAllProductCategoryInfo = async () => {
+
+    const getCities = async () => {
       let response = await axios.get(
-        'https://private-a42220-urunkategorisi.apiary-mock.com/UrunKategorisi'
-      );
-
-      console.log("getAllProductCategoryInfo" + response.data.ProductCategoryList);
-
-      setAllProductCategorys(response.data.ProductCategoryList);
-
-    }
-
-    // call the function
-    getAllProductCategoryInfo().catch(console.error);
-
-  }, [])
-  return (
+          'https://private-fa826-sehir.apiary-mock.com/Sehir'
+          );
   
-   <>
+          //console.log("getAllUserInfo" + response.data.YeniMusteriListesi);
 
-  <Header />
+          setCities(response.data.CityList);
 
-  {/* BEGIN PAGE CONTAINER */}
+  }
+
+  // call the function
+  getCities().catch(console.error);
+ 
+  }, [])
+
+
+  return (
+
+    <>
+
+      <Header />
+
+      {/* BEGIN PAGE CONTAINER */}
   <div className="page-container">
     {/* BEGIN PAGE HEAD */}
     <div className="page-head">
@@ -48,7 +83,7 @@ function UrunKategorisi() {
         {/* BEGIN PAGE TITLE */}
         <div className="page-title">
           <h1>
-            Ürün Kategorisi <small>Liste</small>
+            Müşteri <small>Yeni Kayıt</small>
           </h1>
         </div>
         {/* END PAGE TITLE */}
@@ -296,68 +331,206 @@ function UrunKategorisi() {
         {/* BEGIN PAGE BREADCRUMB */}
         <ul className="page-breadcrumb breadcrumb">
           <li>
-            <a href="#">Ekran İçerikleri</a>
+            <a href="#">Tanımlar</a>
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="#">Ürün Kategorisi</a>
+            <a href="#">Müşteri</a>
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="/UrunKategorisi">Liste</a>
+            <a href="/YeniMusteri">Yeni Kayıt</a>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}
         {/* BEGIN PAGE CONTENT INNER */}
         <div className="row">
           <div className="col-md-12">
-            {/* <div class="note note-success note-bordered">
-						<p>
-							 Please try to re-size your browser window in order to see the tables in responsive mode.
-						</p>
-					</div> */}
-            {/* BEGIN SAMPLE TABLE PORTLET*/}
+            {/* BEGIN SAMPLE FORM PORTLET*/}
             <div className="portlet light">
               <div className="portlet-title">
-                <div className="caption">
-                  <i className="fa fa-cogs font-green-sharp" />
-                  <span className="caption-subject font-green-sharp bold uppercase">
-                    ÜRÜN KATEGORİSİ lİSTESİ
-                  </span>
+                <div className="caption font-green-haze">
+                  {/* <i class="icon-settings font-green-haze"></i>
+								<span class="caption-subject bold uppercase"> Horizontal Form</span> */}
                 </div>
-                <div className="tools">
-                  <a href="javascript:;" className="collapse"></a>
-                </div>
+            
+                  {/* <a class="btn btn-circle btn-icon-only blue" href="javascript:;">
+								<i class="icon-cloud-upload"></i>
+								</a>
+								<a class="btn btn-circle btn-icon-only green" href="javascript:;">
+								<i class="icon-wrench"></i>
+								</a>
+								<a class="btn btn-circle btn-icon-only red" href="javascript:;">
+								<i class="icon-trash"></i> */}
+                 
+               
               </div>
-              <div className="portlet-body">
-                <div className="table-responsive">
-                  <table className="table table-striped table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Ürün Kategorisi</th>
-                        <th>Ana Kategori</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {
-                            allProductCategorys.map((data) => (
-                              <>
-                                <tr>
-                                  <td></td>
-                                  <td>{data.UrunKategorisi}</td>
-                                  <td>{data.AnaKategori}</td>
-                                </tr>
-                              </>
+              <div className="portlet-body form">
+                <form role="form" className="form-horizontal">
+                  <div className="form-body">
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="txtName"
+                      >
+                        Adı*
+                      </label>
+                      <div className="col-md-10">
+                        <input
+                          required=""
+                          autoComplete="off"
+                          type="text"
+                          className="form-control"
+                          id="txtName"
+                          name="txtName"
+                          placeholder="Adınızı Yazınız" onChange={e => setName(e.target.value)}
+                          maxLength={50}
+                        />
+                        <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="txtSurname"
+                      >
+                        Soyadı*
+                      </label>
+                      <div className="col-md-10">
+                        <input
+                          required=""
+                          autoComplete="off"
+                          type="text"
+                          className="form-control"
+                          id="txtSurname"
+                          name="txtSurname"
+                          placeholder="Soyadınızı Yazınız" onChange={e => setSurname(e.target.value)}
+                          maxLength={50}
+                        />
+                        <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="dtBirthDate"
+                      >
+                        Doğum Tarihi
+                      </label>
+                      <div className="col-md-10">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="form_control_1"
+                          placeholder="GG/AA/YYYY"
+                          name="dtBirthDate"
+                          onChange={e => setBirthday(e.target.value)}
+                        />
+                        <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="rdGender"
+                      >
+                        Cinsiyet
+                      </label>
+                      <div className="col-md-10">
+                        <div className="md-radio-inline">
+                          <div className="md-radio">
+                            <input
+                              type="radio"
+                              id="radio53"
+                              name="rdGender"
+                              className="md-radiobtn"
+                              onChange={e => setGender('k')}
+                            />
+                            <label htmlFor="radio53">
+                              <span />
+                              <span className="check" />
+                              <span className="box" />
+                              Kadın{" "}
+                            </label>
+                          </div>
+                          <div className="md-radio has-error">
+                            <input
+                              type="radio"
+                              id="radio54"
+                              name="rdGender"
+                              className="md-radiobtn"
+                              onChange={e => setGender('e')}
+                            />
+                            <label htmlFor="radio54">
+                              <span />
+                              <span className="check" />
+                              <span className="box" />
+                              Erkek{" "}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="cmbCity"
+                      >
+                        Şehir
+                      </label>
+                      <div className="col-md-10">
+                        <select
+                          className="form-control"
+                          id="cmbCity"
+                          name="cmbCity"
+                          onChange={e => setCity(e.target.value)}
+                        >
+                          <option value="">Lütfen seçiniz..</option>
+                          {
+                            cities.map((data) => (
+                              <option value={data.SehirID}>{data.Sehir}</option>
                             )
                             )
                           }
-                    </tbody>
-                  </table>
-                </div>
+                        </select>
+                        <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input has-success">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="txtAdress"
+                      >
+                        Adres
+                      </label>
+                      <div className="col-md-10">
+                        <textarea
+                          autoComplete="off"
+                          className="form-control"
+                          rows={3}
+                          id="txtAdress"
+                          name="txtAdress"
+                          maxLength={500}
+                          defaultValue={""}
+                          placeholder="Açık Adresiniz" onChange={e => setAddress(e.target.value)}
+                        />
+                        <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-actions">
+                    <div className="row">
+                      <div className="col-md-offset-2 col-md-10">
+                        <a  className="btn blue" onClick={()=>myButtonClick()}>
+                          Kaydet
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
-            {/* END SAMPLE TABLE PORTLET*/}
+            {/* END SAMPLE FORM PORTLET*/}
           </div>
         </div>
         {/* END PAGE CONTENT INNER */}
@@ -366,11 +539,12 @@ function UrunKategorisi() {
     {/* END PAGE CONTENT */}
   </div>
   {/* END PAGE CONTAINER */}
-  <Footer/> 
 
-</>
+      <Footer />
+
+    </>
 
   );
 }
 
-export default UrunKategorisi;
+export default YeniMusteri;

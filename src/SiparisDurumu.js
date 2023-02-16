@@ -303,7 +303,7 @@ function SiparisDurumu() {
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="siparisdurumu_liste.html">Liste</a>
+            <a href="/SiparisDurumu">Liste</a>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}

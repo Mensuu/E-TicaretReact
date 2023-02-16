@@ -95,7 +95,7 @@ function Tahsilat() {
           <i className="fa fa-circle" />
         </li>
         <li>
-          <a href="tahsilat_liste.html">Liste</a>
+          <a href="/Tahsilat">Liste</a>
         </li>
       </ul>
       {/* END PAGE BREADCRUMB */}

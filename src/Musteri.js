@@ -21,7 +21,7 @@ function Musteri() {
    
     const getAllCustomerInfo = async () => {
         let response = await axios.get(
-            'https://private-dfab49-nursenozcan.apiary-mock.com/Musteri'
+            'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
             );
     
             //console.log("getAllUserInfo" + response.data.MusteriListesi);
@@ -306,7 +306,7 @@ function Musteri() {
                 <i className="fa fa-circle" />
               </li>
               <li>
-                <a href="musteri_liste.html">Liste</a>
+                <a href="/Musteri">Liste</a>
               </li>
             </ul>
             {/* END PAGE BREADCRUMB */}

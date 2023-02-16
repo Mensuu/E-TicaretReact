@@ -1,16 +1,15 @@
 import './App.css';
-import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
+
+import axios from "axios";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
 
-
-
-function UrunKategorisi() {
-  const [allProductCategorys, setAllProductCategorys] = useState([]);
+function YeniTahsilatTipi() {
   const navigate = useNavigate();
+
 
   useEffect(() => {
 
@@ -18,29 +17,16 @@ function UrunKategorisi() {
     {
       navigate('/Login', {replace: true});
     }
-   
-    const getAllProductCategoryInfo = async () => {
-      let response = await axios.get(
-        'https://private-a42220-urunkategorisi.apiary-mock.com/UrunKategorisi'
-      );
-
-      console.log("getAllProductCategoryInfo" + response.data.ProductCategoryList);
-
-      setAllProductCategorys(response.data.ProductCategoryList);
-
-    }
-
-    // call the function
-    getAllProductCategoryInfo().catch(console.error);
-
+ 
   }, [])
+
+
   return (
-  
-   <>
 
-  <Header />
+    <>
 
-  {/* BEGIN PAGE CONTAINER */}
+      <Header />
+      {/* BEGIN PAGE CONTAINER */}
   <div className="page-container">
     {/* BEGIN PAGE HEAD */}
     <div className="page-head">
@@ -48,7 +34,7 @@ function UrunKategorisi() {
         {/* BEGIN PAGE TITLE */}
         <div className="page-title">
           <h1>
-            Ürün Kategorisi <small>Liste</small>
+            Tahsilat Tipi <small>Yeni Kayıt</small>
           </h1>
         </div>
         {/* END PAGE TITLE */}
@@ -300,77 +286,89 @@ function UrunKategorisi() {
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="#">Ürün Kategorisi</a>
+            <a href="#">Tahsilat Tipi</a>
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="/UrunKategorisi">Liste</a>
+            <a href="/YeniTahsilatTipi">Yeni Kayıt</a>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}
-        {/* BEGIN PAGE CONTENT INNER */}
         <div className="row">
           <div className="col-md-12">
-            {/* <div class="note note-success note-bordered">
-						<p>
-							 Please try to re-size your browser window in order to see the tables in responsive mode.
-						</p>
-					</div> */}
-            {/* BEGIN SAMPLE TABLE PORTLET*/}
+            {/* BEGIN SAMPLE FORM PORTLET*/}
             <div className="portlet light">
               <div className="portlet-title">
-                <div className="caption">
-                  <i className="fa fa-cogs font-green-sharp" />
-                  <span className="caption-subject font-green-sharp bold uppercase">
-                    ÜRÜN KATEGORİSİ lİSTESİ
-                  </span>
+                <div className="caption font-green-haze">
+                  {/* <i class="icon-settings font-green-haze"></i>
+								<span class="caption-subject bold uppercase"> Horizontal Form</span> */}
                 </div>
-                <div className="tools">
-                  <a href="javascript:;" className="collapse"></a>
-                </div>
-              </div>
-              <div className="portlet-body">
-                <div className="table-responsive">
-                  <table className="table table-striped table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Ürün Kategorisi</th>
-                        <th>Ana Kategori</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {
-                            allProductCategorys.map((data) => (
-                              <>
-                                <tr>
-                                  <td></td>
-                                  <td>{data.UrunKategorisi}</td>
-                                  <td>{data.AnaKategori}</td>
-                                </tr>
-                              </>
-                            )
-                            )
-                          }
-                    </tbody>
-                  </table>
+                <div className="actions">
+                  {/* <a class="btn btn-circle btn-icon-only blue" href="javascript:;">
+								<i class="icon-cloud-upload"></i>
+								</a>
+								<a class="btn btn-circle btn-icon-only green" href="javascript:;">
+								<i class="icon-wrench"></i>
+								</a>
+								<a class="btn btn-circle btn-icon-only red" href="javascript:;">
+								<i class="icon-trash"></i>
+								</a> */}
+                  <a
+                    className="btn btn-circle btn-icon-only btn-default fullscreen"
+                    href="javascript:;"
+                    data-original-title=""
+                    title=""
+                  ></a>
                 </div>
               </div>
+              <div className="portlet-body form">
+                <form role="form" className="form-horizontal">
+                  <div className="form-body">
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="form_control_1"
+                      >
+                        Tahsilat Tipi
+                      </label>
+                      <div className="col-md-10">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="form_control_1"
+                        />
+                        <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                    <div className="form-actions">
+                      <div className="row">
+                        <div className="col-md-offset-2 col-md-10">
+                          <button type="button" className="btn blue">
+                            Kaydet
+                          </button>
+                          <button type="button" className="btn default">
+                            Vazgeç
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              {/* END SAMPLE FORM PORTLET*/}
             </div>
-            {/* END SAMPLE TABLE PORTLET*/}
           </div>
         </div>
-        {/* END PAGE CONTENT INNER */}
       </div>
+      {/* END PAGE CONTENT */}
     </div>
-    {/* END PAGE CONTENT */}
+    {/* END PAGE CONTAINER */}
   </div>
-  {/* END PAGE CONTAINER */}
-  <Footer/> 
+      <Footer />
 
-</>
+    </>
 
   );
 }
 
-export default UrunKategorisi;
+export default YeniTahsilatTipi;
