@@ -24,9 +24,9 @@ function Musteri() {
             'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
             );
     
-            //console.log("getAllUserInfo" + response.data.MusteriListesi);
+            //console.log("getAllUserInfo" + response.data.CustomerList);
 
-            setAllCustomers(response.data.MusteriListesi);
+            setAllCustomers(response.data.CustomerList);
 
     }
 

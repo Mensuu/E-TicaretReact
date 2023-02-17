@@ -8,7 +8,6 @@ import Footer from "./Components/Footer";
 
 
 function YeniOdeme() {
-  const [allNewPayments, setAllNewPayments] = useState([]);
   const navigate = useNavigate();
 
   const[toWho, setToWho] = useState([]);
@@ -17,6 +16,9 @@ function YeniOdeme() {
   const[totalAmount, setTotalAmount] = useState([]);
   const[paymentChannel, setPaymentChannel] = useState([]);
   const[explanation, setExplanation] = useState([]);
+
+  const[customers, setCustomers] = useState([]);
+  const[currencys, setCurrencys] = useState([]);
 
   const myButtonClick = async() => {
     
@@ -49,19 +51,19 @@ function YeniOdeme() {
       navigate('/Login', {replace: true});
     }
     
-    const getAllNewPaymentInfo = async () => {
+    const getCustomers = async () => {
       let response = await axios.get(
-        'https://private-67bb4c-odeme.apiary-mock.com/Odeme'
-      );
+          'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+          );
+  
+          //console.log("getAllUserInfo" + response.data.YeniOdemeListesi);
 
-      console.log("getAllNewPaymentInfo" + response.data.NewPaymentList);
-
-      setAllNewPayments(response.data.NewPaymentList);
+          setCustomers(response.data.CustomerList);
 
     }
 
     // call the function
-    getAllNewPaymentInfo().catch(console.error);
+    getCustomers().catch(console.error);
 
   }, [])
 
@@ -374,17 +376,20 @@ function YeniOdeme() {
                       <label
                         className="col-md-2 control-label"
                         htmlFor="form_control_1"
-                        onChange={e => setToWho(e.target.value)}
+                        
                       >
                         Kime
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1" >
-                          <option value="">Lütfen seçiniz..</option>
-                          <option value="">Müşteri 1</option>
-                          <option value="">Müşteri 2</option>
-                          <option value="">Müşteri 3</option>
-                          <option value="">Müşteri 4</option>
+                        <select className="form-control" id="form_control_1" onChange={e => setToWho(e.target.value)}>
+                        <option value="">Lütfen seçiniz..</option>
+                          {
+                            customers.map((data) => (
+                              <option value={data.MusteriID}>{data.MusteriAdi}</option>
+
+                            )
+                            )
+                          }
                         </select>
                         <div className="form-control-focus"></div>
                       </div>
@@ -401,6 +406,7 @@ function YeniOdeme() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
+                          onChange={e => setTotalAmount(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -413,11 +419,15 @@ function YeniOdeme() {
                         Para Birimi
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1">
+                        <select className="form-control" id="form_control_1" onChange={e => setCurrency(e.target.value)}>
                           <option value="">Lütfen seçiniz..</option>
-                          <option value="">TRY</option>
-                          <option value="">EUR</option>
-                          <option value="">USD</option>
+                          {
+                            currencys.map((data) => (
+                              <option value={data.ParaBirimiID}>{data.ParaBirimi}</option>
+
+                            )
+                            )
+                          }
                         </select>
                       </div>
                     </div>
@@ -434,6 +444,7 @@ function YeniOdeme() {
                           className="form-control"
                           id="form_control_1"
                           placeholder="GG/AA/YYYY"
+                          onChange={e => setPaymentDate(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -446,12 +457,15 @@ function YeniOdeme() {
                         Ödeme Kanalı
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1">
-                          <option value="">Lütfen seçiniz..</option>
-                          <option value="">Kredi kartı</option>
-                          <option value="">Banka Havale/EFT</option>
-                          <option value="">Çek</option>
-                          <option value="">Senet</option>
+                        <select className="form-control" id="form_control_1" onChange={e => setPaymentChannel(e.target.value)}>
+                        <option value="">Lütfen seçiniz..</option>
+                          {
+                            currencys.map((data) => (
+                              <option value={data.OdemeKanalıID}>{data.OdemeKanalı}</option>
+
+                            )
+                            )
+                          }
                         </select>
                       </div>
                     </div>
@@ -467,6 +481,7 @@ function YeniOdeme() {
                           className="form-control"
                           rows={3}
                           defaultValue={""}
+                          onChange={e => setExplanation(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -475,12 +490,9 @@ function YeniOdeme() {
                   <div className="form-actions">
                     <div className="row">
                       <div className="col-md-offset-2 col-md-10">
-                        <button type="button" className="btn blue">
+                      <a  className="btn blue" onClick={()=>myButtonClick()}>
                           Kaydet
-                        </button>
-                        <button type="button" className="btn default">
-                          Vazgeç
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
