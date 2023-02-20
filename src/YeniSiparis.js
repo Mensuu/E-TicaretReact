@@ -8,7 +8,45 @@ import Footer from "./Components/Footer";
 
 
 function YeniSiparis() {
+  
   const navigate = useNavigate();
+
+  const [orderer, setOrderer] = useState([]);
+  const [orderDate, setOrderDate] = useState([]);
+  const [currency, setCurrency] = useState([]);
+  const [totalAmount, setTotalAmount] = useState([]);
+  const [orderDetails, setOrderDetails] = useState([]);
+  const [orderStatus, setOrderStatus] = useState([]);
+
+  const [orderers, setOrderers] = useState([]);
+  const [currencies, setCurrencies] = useState([]);
+  const [orderStatuses, setOrderStatuses] = useState([]);
+
+  const myButtonClick = async () => {
+
+    let requestBody = {
+      SiparisVeren: orderer,
+      SiparisTarihi: orderDate,
+      ParaBirimi: currency,
+      ToplamTutar: totalAmount,
+      SiparisDetayları: orderDetails,
+      SiparisDurumu: orderStatus
+    }
+
+    const response = await axios.post(
+      'https://private-6cd1c-siparis.apiary-mock.com/Siparis',
+      requestBody
+    );
+
+
+    //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
+
+    let data = response.data.message;
+    alert(data);
+    navigate('/Siparis', { replace: true });
+
+
+  }
 
 
   useEffect(() => {
@@ -17,6 +55,33 @@ function YeniSiparis() {
     {
       navigate('/Login', {replace: true});
     }
+
+    const getOrderers = async () => {
+      let response = await axios.get(
+        'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+      );
+      setOrderers(response.data.CustomerList);
+
+    }
+    getOrderers().catch(console.error);
+
+    const getCurrencies = async () => {
+      let response = await axios.get(
+        'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+      );
+      setCurrencies(response.data.CurrencyList);
+
+    }
+    getCurrencies().catch(console.error);
+
+    const getOrderStatuses = async () => {
+      let response = await axios.get(
+        'https://private-266ca0-siparisdurumu.apiary-mock.com/SiparisDurumu'
+      );
+      setOrderStatuses(response.data.OrderStatusList);
+
+    }
+    getOrderStatuses().catch(console.error);
  
   }, [])
 
@@ -305,22 +370,6 @@ function YeniSiparis() {
                   {/* <i class="icon-settings font-green-haze"></i>
 								<span class="caption-subject bold uppercase"> Horizontal Form</span> */}
                 </div>
-                <div className="actions">
-                  {/* <a class="btn btn-circle btn-icon-only blue" href="javascript:;">
-								<i class="icon-cloud-upload"></i>
-								</a>
-								<a class="btn btn-circle btn-icon-only green" href="javascript:;">
-								<i class="icon-wrench"></i>
-								</a>
-								<a class="btn btn-circle btn-icon-only red" href="javascript:;">
-								<i class="icon-trash"></i> */}
-                  <a
-                    className="btn btn-circle btn-icon-only btn-default fullscreen"
-                    href="javascript:;"
-                    data-original-title=""
-                    title=""
-                  ></a>
-                </div>
               </div>
               <div className="portlet-body form">
                 <form role="form" className="form-horizontal">
@@ -333,12 +382,14 @@ function YeniSiparis() {
                         Siparişi Veren
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1">
+                        <select className="form-control" id="form_control_1" onChange={e => setOrderer(e.target.value)}>
                           <option value="">Lütfen seçiniz..</option>
-                          <option value="">Müşteri 1</option>
-                          <option value="">Müşteri 2</option>
-                          <option value="">Müşteri 3</option>
-                          <option value="">Müşteri 4</option>
+                          {
+                                orderers.map((data) => (
+                                  <option value={data.MusteriID}>{data.MusteriAdi}</option>
+                                )
+                                )
+                              }
                         </select>
                         <div className="form-control-focus"></div>
                       </div>
@@ -356,6 +407,7 @@ function YeniSiparis() {
                           className="form-control"
                           id="form_control_1"
                           placeholder="GG/AA/YYYY"
+                          onChange={e => setOrderDate(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -368,11 +420,14 @@ function YeniSiparis() {
                         Para Birimi
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1">
+                        <select className="form-control" id="form_control_1" onChange={e => setCurrency(e.target.value)}>
                           <option value="">Lütfen seçiniz..</option>
-                          <option value="">TRY</option>
-                          <option value="">EUR</option>
-                          <option value="">USD</option>
+                          {
+                                currencies.map((data) => (
+                                  <option value={data.ParaBirimiID}>{data.ParaBirimi}</option>
+                                )
+                                )
+                              }
                         </select>
                       </div>
                     </div>
@@ -388,6 +443,7 @@ function YeniSiparis() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
+                          onChange={e => setTotalAmount(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -404,6 +460,7 @@ function YeniSiparis() {
                           className="form-control"
                           rows={3}
                           defaultValue={""}
+                          onChange={e => setOrderDetails(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -416,13 +473,14 @@ function YeniSiparis() {
                         Sipariş Durumu
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1">
+                        <select className="form-control" id="form_control_1" onChange={e => setOrderStatus(e.target.value)}>
                           <option value="">Lütfen seçiniz..</option>
-                          <option value="">Sipariş Verildi</option>
-                          <option value="">Onaylandı</option>
-                          <option value="">Tamamlandı</option>
-                          <option value="">İade Edildi</option>
-                          <option value="">İptal Edildi</option>
+                          {
+                                orderStatuses.map((data) => (
+                                  <option value={data.SiparisDurumuID}>{data.SiparisDurumu}</option>
+                                )
+                                )
+                              }
                         </select>
                       </div>
                     </div>
@@ -430,12 +488,9 @@ function YeniSiparis() {
                   <div className="form-actions">
                     <div className="row">
                       <div className="col-md-offset-2 col-md-10">
-                        <button type="button" className="btn blue">
-                          Kaydet
-                        </button>
-                        <button type="button" className="btn default">
-                          Vazgeç
-                        </button>
+                      <a className="btn blue" onClick={() => myButtonClick()}>
+                              Kaydet
+                            </a>
                       </div>
                     </div>
                   </div>

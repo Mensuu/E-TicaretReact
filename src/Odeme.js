@@ -353,8 +353,8 @@ function Odeme() {
                                   <td>{data.OdemeTarihi}</td>
                                   <td>{data.ParaBirimi}</td>
                                   <td>{data.ToplamTutar}</td>
-                                  <td>{data.OdemeKanalı}</td>
-                                  <td>{data.Acıklama}</td>
+                                  <td>{data.OdemeKanali}</td>
+                                  <td>{data.Aciklama}</td>
                                 </tr>
                               </>
                             )

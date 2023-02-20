@@ -10,13 +10,34 @@ import Footer from "./Components/Footer";
 function YeniUrunKategorisi() {
   const navigate = useNavigate();
 
+  const [productCategory, setProductCategory] = useState([]);
 
+  const myButtonClick = async () => {
+
+    let requestBody = {
+      UrunKategorisi: productCategory
+    }
+
+    const response = await axios.post(
+      'https://private-6cd1c-siparis.apiary-mock.com/Siparis',
+      requestBody
+    );
+
+
+    //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
+
+    let data = response.data.message;
+    alert(data);
+    navigate('/UrunKategorisi', { replace: true });
+  }
+  
   useEffect(() => {
 
     if (!localStorage.getItem("userName"))
     {
       navigate('/Login', {replace: true});
     }
+
  
   }, [])
 
@@ -303,23 +324,6 @@ function YeniUrunKategorisi() {
                   {/* <i class="icon-settings font-green-haze"></i>
 								<span class="caption-subject bold uppercase"> Horizontal Form</span> */}
                 </div>
-                <div className="actions">
-                  {/* <a class="btn btn-circle btn-icon-only blue" href="javascript:;">
-								<i class="icon-cloud-upload"></i>
-								</a>
-								<a class="btn btn-circle btn-icon-only green" href="javascript:;">
-								<i class="icon-wrench"></i>
-								</a>
-								<a class="btn btn-circle btn-icon-only red" href="javascript:;">
-								<i class="icon-trash"></i>
-								</a> */}
-                  <a
-                    className="btn btn-circle btn-icon-only btn-default fullscreen"
-                    href="javascript:;"
-                    data-original-title=""
-                    title=""
-                  ></a>
-                </div>
               </div>
               <div className="portlet-body form">
                 <form role="form" className="form-horizontal">
@@ -336,6 +340,7 @@ function YeniUrunKategorisi() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
+                          onChange={e => setProductCategory(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -343,12 +348,9 @@ function YeniUrunKategorisi() {
                     <div className="form-actions">
                       <div className="row">
                         <div className="col-md-offset-2 col-md-10">
-                          <button type="button" className="btn blue">
-                            Kaydet
-                          </button>
-                          <button type="button" className="btn default">
-                            Vazgeç
-                          </button>
+                        <a className="btn blue" onClick={() => myButtonClick()}>
+                              Kaydet
+                            </a>
                         </div>
                       </div>
                     </div>

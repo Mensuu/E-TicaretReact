@@ -66,7 +66,7 @@ function YeniMusteri() {
 
     const getGenders = async () => {
       let response = await axios.get(
-        'https://private-c52218-cinsiyet1.apiary-mock.com/YeniMusteri'
+        'https://private-c52218-cinsiyet1.apiary-mock.com/Cinsiyet'
       );
 
       //console.log("getAllUserInfo" + response.data.GenderList);

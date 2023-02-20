@@ -9,6 +9,29 @@ import Footer from "./Components/Footer";
 
 function YeniSehir() {
   const navigate = useNavigate();
+  const [city, setCity] = useState([]);
+
+  const myButtonClick = async () => {
+
+    let requestBody = {
+      Sehir: city
+    }
+
+    const response = await axios.post(
+      'https://private-fa826-sehir.apiary-mock.com/Sehir',
+      requestBody
+    );
+
+
+    //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
+
+    let data = response.data.message;
+    alert(data);
+    navigate('/Sehir', { replace: true });
+
+
+  }
+
 
 
   useEffect(() => {
@@ -303,23 +326,6 @@ function YeniSehir() {
                   {/* <i class="icon-settings font-green-haze"></i>
 								<span class="caption-subject bold uppercase"> Horizontal Form</span> */}
                 </div>
-                <div className="actions">
-                  {/* <a class="btn btn-circle btn-icon-only blue" href="javascript:;">
-								<i class="icon-cloud-upload"></i>
-								</a>
-								<a class="btn btn-circle btn-icon-only green" href="javascript:;">
-								<i class="icon-wrench"></i>
-								</a>
-								<a class="btn btn-circle btn-icon-only red" href="javascript:;">
-								<i class="icon-trash"></i>
-								</a> */}
-                  <a
-                    className="btn btn-circle btn-icon-only btn-default fullscreen"
-                    href="javascript:;"
-                    data-original-title=""
-                    title=""
-                  ></a>
-                </div>
               </div>
               <div className="portlet-body form">
                 <form role="form" className="form-horizontal">
@@ -336,6 +342,7 @@ function YeniSehir() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
+                          onChange={e => setCity(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -343,12 +350,9 @@ function YeniSehir() {
                     <div className="form-actions">
                       <div className="row">
                         <div className="col-md-offset-2 col-md-10">
-                          <button type="button" className="btn blue">
-                            Kaydet
-                          </button>
-                          <button type="button" className="btn default">
-                            Vazgeç
-                          </button>
+                        <a className="btn blue" onClick={() => myButtonClick()}>
+                              Kaydet
+                            </a>
                         </div>
                       </div>
                     </div>

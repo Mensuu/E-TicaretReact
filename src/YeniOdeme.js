@@ -18,7 +18,8 @@ function YeniOdeme() {
   const[explanation, setExplanation] = useState([]);
 
   const[customers, setCustomers] = useState([]);
-  const[currencys, setCurrencys] = useState([]);
+  const[currencies, setCurrencies] = useState([]);
+  const[paymentChannels, setPaymentChannels] = useState([]);
 
   const myButtonClick = async() => {
     
@@ -55,15 +56,28 @@ function YeniOdeme() {
       let response = await axios.get(
           'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
           );
-  
-          //console.log("getAllUserInfo" + response.data.YeniOdemeListesi);
-
           setCustomers(response.data.CustomerList);
 
     }
-
-    // call the function
     getCustomers().catch(console.error);
+
+    const getCurrencies = async () => {
+      let response = await axios.get(
+          'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+          );
+          setCurrencies(response.data.CurrencyList);
+
+    }
+    getCurrencies().catch(console.error);
+
+    const getPaymentChannels = async () => {
+      let response = await axios.get(
+          'https://private-9dd9b4-odemekanali.apiary-mock.com/OdemeKanali'
+          );
+          setPaymentChannels(response.data.PaymentChannelList);
+
+    }
+    getPaymentChannels().catch(console.error);
 
   }, [])
 
@@ -352,22 +366,9 @@ function YeniOdeme() {
                   {/* <i class="icon-settings font-green-haze"></i>
 								<span class="caption-subject bold uppercase"> Horizontal Form</span> */}
                 </div>
-                <div className="actions">
-                  {/* <a class="btn btn-circle btn-icon-only blue" href="javascript:;">
-								<i class="icon-cloud-upload"></i>
-								</a>
-								<a class="btn btn-circle btn-icon-only green" href="javascript:;">
-								<i class="icon-wrench"></i>
-								</a>
-								<a class="btn btn-circle btn-icon-only red" href="javascript:;">
-								<i class="icon-trash"></i> */}
-                  <a
-                    className="btn btn-circle btn-icon-only btn-default fullscreen"
-                    href="javascript:;"
-                    data-original-title=""
-                    title=""
-                  ></a>
-                </div>
+                
+              
+                
               </div>
               <div className="portlet-body form">
                 <form role="form" className="form-horizontal">
@@ -422,7 +423,7 @@ function YeniOdeme() {
                         <select className="form-control" id="form_control_1" onChange={e => setCurrency(e.target.value)}>
                           <option value="">Lütfen seçiniz..</option>
                           {
-                            currencys.map((data) => (
+                            currencies.map((data) => (
                               <option value={data.ParaBirimiID}>{data.ParaBirimi}</option>
 
                             )
@@ -460,8 +461,8 @@ function YeniOdeme() {
                         <select className="form-control" id="form_control_1" onChange={e => setPaymentChannel(e.target.value)}>
                         <option value="">Lütfen seçiniz..</option>
                           {
-                            currencys.map((data) => (
-                              <option value={data.OdemeKanalıID}>{data.OdemeKanalı}</option>
+                            paymentChannels.map((data) => (
+                              <option value={data.OdemeKanaliID}>{data.OdemeKanali}</option>
 
                             )
                             )

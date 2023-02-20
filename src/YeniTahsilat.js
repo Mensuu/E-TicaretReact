@@ -10,6 +10,42 @@ import Footer from "./Components/Footer";
 function YeniTahsilat() {
   const navigate = useNavigate();
 
+  
+  const [customer, setCustomer] = useState([]);
+  const [currency, setCurrency] = useState([]);
+  const [totalAmount, setTotalAmount] = useState([]);
+  const [order, setOrder] = useState([]);
+  const [collectionType, setCollectionType] = useState([]);
+
+  const [customers, setCustomers] = useState([]);
+  const [currencies, setCurrencies] = useState([]);
+  const [products, setProducts] = useState([]);
+
+  const myButtonClick = async () => {
+
+    let requestBody = {
+      Musteri: customer,
+      ParaBirimi: currency,
+      ToplamTutar: totalAmount,
+      İlgiliSiparis: order,
+      TahsilatTipi: collectionType
+    }
+
+    const response = await axios.post(
+      'https://private-07d350-tahsilat.apiary-mock.com/Tahsilat',
+      requestBody
+    );
+
+
+    //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
+
+    let data = response.data.message;
+    alert(data);
+    navigate('/Tahsilat', { replace: true });
+
+
+  }
+
 
   useEffect(() => {
 
@@ -17,9 +53,40 @@ function YeniTahsilat() {
     {
       navigate('/Login', {replace: true});
     }
+
+    const getCustomers = async () => {
+      let response = await axios.get(
+        'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+      );
+
+      setCustomers(response.data.CustomerList);
+
+    }
+    getCustomers().catch(console.error);
+
+    const getCurrencies = async () => {
+      let response = await axios.get(
+        'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+      );
+
+      setCurrencies(response.data.CurrencyList);
+
+    }
+    getCurrencies().catch(console.error);
+
+    const getProducts = async () => {
+      let response = await axios.get(
+        'https://private-b49dc1-urun3.apiary-mock.com/Urun'
+      );
+
+      setProducts(response.data.ProductList);
+
+    }
+    getProducts().catch(console.error);
  
   }, [])
-
+  
+  
 
   return (
 
@@ -305,22 +372,6 @@ function YeniTahsilat() {
                   {/* <i class="icon-settings font-green-haze"></i>
 								<span class="caption-subject bold uppercase"> Horizontal Form</span> */}
                 </div>
-                <div className="actions">
-                  {/* <a class="btn btn-circle btn-icon-only blue" href="javascript:;">
-								<i class="icon-cloud-upload"></i>
-								</a>
-								<a class="btn btn-circle btn-icon-only green" href="javascript:;">
-								<i class="icon-wrench"></i>
-								</a>
-								<a class="btn btn-circle btn-icon-only red" href="javascript:;">
-								<i class="icon-trash"></i> */}
-                  <a
-                    className="btn btn-circle btn-icon-only btn-default fullscreen"
-                    href="javascript:;"
-                    data-original-title=""
-                    title=""
-                  ></a>
-                </div>
               </div>
               <div className="portlet-body form">
                 <form role="form" className="form-horizontal">
@@ -333,12 +384,15 @@ function YeniTahsilat() {
                         Müşteri
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1">
+                        <select className="form-control" id="form_control_1"  onChange={e => setCustomer(e.target.value)}
+                              maxLength={50}>
                           <option value="">Lütfen seçiniz..</option>
-                          <option value="">Müşteri 1</option>
-                          <option value="">Müşteri 2</option>
-                          <option value="">Müşteri 3</option>
-                          <option value="">Müşteri 4</option>
+                          {
+                                customers.map((data) => (
+                                  <option value={data.MusteriID}>{data.MusteriAdi}</option>
+                                )
+                                )
+                              }
                         </select>
                         <div className="form-control-focus"></div>
                       </div>
@@ -355,6 +409,7 @@ function YeniTahsilat() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
+                          onChange={e => setTotalAmount(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -367,11 +422,14 @@ function YeniTahsilat() {
                         Para Birimi
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1">
+                        <select className="form-control" id="form_control_1" onChange={e => setCurrency(e.target.value)}>
                           <option value="">Lütfen seçiniz..</option>
-                          <option value="">TRY</option>
-                          <option value="">EUR</option>
-                          <option value="">USD</option>
+                          {
+                                currencies.map((data) => (
+                                  <option value={data.ParaBirimiID}>{data.ParaBirimi}</option>
+                                )
+                                )
+                              }
                         </select>
                       </div>
                     </div>
@@ -383,13 +441,14 @@ function YeniTahsilat() {
                         İlgili Sipariş
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1">
+                        <select className="form-control" id="form_control_1" onChange={e => setOrder(e.target.value)}>
                           <option value="">Lütfen seçiniz..</option>
-                          <option value="">Sipariş 1</option>
-                          <option value="">Sipariş 2</option>
-                          <option value="">Sipariş 3</option>
-                          <option value="">Sipariş 4</option>
-                          <option value="">Sipariş 5</option>
+                          {
+                                products.map((data) => (
+                                  <option value={data.UrunID}>{data.UrunAdi}</option>
+                                )
+                                )
+                              }
                         </select>
                       </div>
                     </div>
@@ -398,7 +457,7 @@ function YeniTahsilat() {
                         className="col-md-2 control-label"
                         htmlFor="form_control_1"
                       >
-                        Tahsilat Tarihi
+                        Tahsilat Tipi
                       </label>
                       <div className="col-md-10">
                         <input
@@ -406,36 +465,18 @@ function YeniTahsilat() {
                           className="form-control"
                           id="form_control_1"
                           placeholder="GG/AA/YYYY"
+                          onChange={e => setCollectionType(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
                     </div>
-                    <div className="form-group form-md-line-input has-success">
-                      <label
-                        className="col-md-2 control-label"
-                        htmlFor="form_control_1"
-                      >
-                        Açıklama
-                      </label>
-                      <div className="col-md-10">
-                        <textarea
-                          className="form-control"
-                          rows={3}
-                          defaultValue={""}
-                        />
-                        <div className="form-control-focus"></div>
-                      </div>
                     </div>
-                  </div>
                   <div className="form-actions">
                     <div className="row">
                       <div className="col-md-offset-2 col-md-10">
-                        <button type="button" className="btn blue">
-                          Kaydet
-                        </button>
-                        <button type="button" className="btn default">
-                          Vazgeç
-                        </button>
+                      <a className="btn blue" onClick={() => myButtonClick()}>
+                              Kaydet
+                            </a>
                       </div>
                     </div>
                   </div>

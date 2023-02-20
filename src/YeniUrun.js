@@ -10,6 +10,38 @@ import Footer from "./Components/Footer";
 function YeniUrun() {
   const navigate = useNavigate();
 
+  const [productName, setProductName] = useState([]);
+  const [code, setCode] = useState([]);
+  const [price, setPrice] = useState([]);
+  const [currency, setCurrency] = useState([]);
+  const [stockQuantity, setStockQuantity] = useState([]);
+  const [explanation, setExplanation] = useState([]);
+
+  const [currencies, setCurrencies] = useState([]);
+
+  const myButtonClick = async () => {
+
+    let requestBody = {
+      UrunAdi: productName,
+      UrunKodu: code,
+      ParaBirimi: price,
+      ParaBirimi: currency,
+      Stok: stockQuantity,
+      Aciklama: explanation
+    }
+    const response = await axios.post(
+      'https://private-b305d-meneksecorum.apiary-mock.com/Musteri',
+      requestBody
+    );
+
+
+    //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
+
+    let data = response.data.message;
+    alert(data);
+    navigate('/Urun', { replace: true });
+
+  }
 
   useEffect(() => {
 
@@ -17,8 +49,18 @@ function YeniUrun() {
     {
       navigate('/Login', {replace: true});
     }
+
+    const getCurrencies = async () => {
+      let response = await axios.get(
+        'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+      );
+      setCurrencies(response.data.CurrencyList);
+    }
+
+    getCurrencies().catch(console.error);
  
   }, [])
+
 
 
   return (
@@ -317,6 +359,7 @@ function YeniUrun() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
+                          onChange={e => setProductName(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -333,6 +376,7 @@ function YeniUrun() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
+                          onChange={e => setCode(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -349,6 +393,7 @@ function YeniUrun() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
+                          onChange={e => setPrice(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -361,11 +406,15 @@ function YeniUrun() {
                         Para Birimi
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1">
+                        <select className="form-control" id="form_control_1" onChange={e => setCurrency(e.target.value)}>
                           <option value="">Lütfen seçiniz..</option>
-                          <option value="">TRY</option>
-                          <option value="">EUR</option>
-                          <option value="">USD</option>
+                          {
+                            currencies.map((data) => (
+                              <option value={data.ParaBirimiID}>{data.ParaBirimi}</option>
+
+                            )
+                            )
+                          }
                         </select>
                       </div>
                     </div>
@@ -381,6 +430,7 @@ function YeniUrun() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
+                          onChange={e => setStockQuantity(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -397,6 +447,7 @@ function YeniUrun() {
                           className="form-control"
                           rows={3}
                           defaultValue={""}
+                          onChange={e => setExplanation(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
                       </div>
@@ -405,12 +456,9 @@ function YeniUrun() {
                   <div className="form-actions">
                     <div className="row">
                       <div className="col-md-offset-2 col-md-10">
-                        <button type="button" className="btn blue">
-                          Kaydet
-                        </button>
-                        <button type="button" className="btn default">
-                          Vazgeç
-                        </button>
+                      <a className="btn blue" onClick={() => myButtonClick()}>
+                              Kaydet
+                            </a>
                       </div>
                     </div>
                   </div>
@@ -430,6 +478,7 @@ function YeniUrun() {
     </>
 
   );
+  
 }
 
 export default YeniUrun;
