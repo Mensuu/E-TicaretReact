@@ -9,7 +9,7 @@ import Footer from "./Components/Footer";
 
 
 function TahsilatTipi() {
-  const [allCollectionTypes, setAllCollectionTypes] = useState([]);
+  const [collectionType, setCollectionType] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,19 +19,19 @@ function TahsilatTipi() {
       navigate('/Login', {replace: true});
     }
 
-    const getAllCollectionTypeInfo = async () => {
+    const getCollectionType= async () => {
       let response = await axios.get(
         'https://private-b9327-tahsilattipi.apiary-mock.com/TahsilatTipi'
       );
 
-      console.log("getAllCollectionTypeInfo" + response.data.CollectionTypeList);
+      console.log("getCollectionType" + response.data.CollectionTypeList);
 
-      setAllCollectionTypes(response.data.CollectionTypeList);
+      setCollectionType(response.data.CollectionTypeList);
 
     }
 
     // call the function
-    getAllCollectionTypeInfo().catch(console.error);
+    getCollectionType().catch(console.error);
 
   }, [])
   return (
@@ -340,7 +340,7 @@ function TahsilatTipi() {
                     </thead>
                     <tbody>
                     {
-                            allCollectionTypes.map((data) => (
+                            collectionType.map((data) => (
                               <>
                                 <tr>
                                   <td></td>

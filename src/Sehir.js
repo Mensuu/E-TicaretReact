@@ -9,7 +9,7 @@ import Footer from "./Components/Footer";
 
 
 function Sehir() {
-  const [allCities, setAllCities] = useState([]);
+  const [city, setCity] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,19 +19,19 @@ function Sehir() {
       navigate('/Login', {replace: true});
     }
 
-    const getAllCityInfo = async () => {
+    const getCity = async () => {
       let response = await axios.get(
         'https://private-fa826-sehir.apiary-mock.com/Sehir'
       );
 
-      console.log("getAllCityInfo" + response.data.CityList);
+      console.log("getCity" + response.data.CityList);
 
-      setAllCities(response.data.CityList);
+      setCity(response.data.CityList);
 
     }
 
     // call the function
-    getAllCityInfo().catch(console.error);
+    getCity().catch(console.error);
 
   }, [])
   return (
@@ -340,7 +340,7 @@ function Sehir() {
                   </thead>
                   <tbody>
                   {
-                            allCities.map((data) => (
+                            city.map((data) => (
                               <>
                                 <tr>
                                   <td></td>

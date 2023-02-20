@@ -9,7 +9,7 @@ import Footer from "./Components/Footer";
 
 
 function UrunKategorisi() {
-  const [allProductCategorys, setAllProductCategorys] = useState([]);
+  const [productCategory, setProductCategory] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,19 +19,19 @@ function UrunKategorisi() {
       navigate('/Login', {replace: true});
     }
    
-    const getAllProductCategoryInfo = async () => {
+    const getProductCategoryInfo = async () => {
       let response = await axios.get(
         'https://private-a42220-urunkategorisi.apiary-mock.com/UrunKategorisi'
       );
 
-      console.log("getAllProductCategoryInfo" + response.data.ProductCategoryList);
+      console.log("getProductCategoryInfo" + response.data.ProductCategoryList);
 
-      setAllProductCategorys(response.data.ProductCategoryList);
+      setProductCategory(response.data.ProductCategoryList);
 
     }
 
     // call the function
-    getAllProductCategoryInfo().catch(console.error);
+    getProductCategoryInfo().catch(console.error);
 
   }, [])
   return (
@@ -335,18 +335,18 @@ function UrunKategorisi() {
                     <thead>
                       <tr>
                         <th>#</th>
+                        <th>Ürün</th>
                         <th>Ürün Kategorisi</th>
-                        <th>Ana Kategori</th>
                       </tr>
                     </thead>
                     <tbody>
                     {
-                            allProductCategorys.map((data) => (
+                            productCategory.map((data) => (
                               <>
                                 <tr>
                                   <td></td>
+                                  <td>{data.Urun}</td>
                                   <td>{data.UrunKategorisi}</td>
-                                  <td>{data.AnaKategori}</td>
                                 </tr>
                               </>
                             )

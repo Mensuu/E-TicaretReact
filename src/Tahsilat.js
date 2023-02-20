@@ -9,7 +9,7 @@ import Footer from "./Components/Footer";
 
 
 function Tahsilat() {
-  const [allCollections, setAllCollections] = useState([]);
+  const [collection, setCollection] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,19 +19,19 @@ function Tahsilat() {
       navigate('/Login', {replace: true});
     }
     
-    const getAllCollectionInfo = async () => {
+    const getCollection = async () => {
       let response = await axios.get(
         'https://private-07d350-tahsilat.apiary-mock.com/Tahsilat'
       );
 
       console.log("getAllPaymentInfo" + response.data.CollectionList);
 
-      setAllCollections(response.data.CollectionList);
+      setCollection(response.data.CollectionList);
 
     }
 
     // call the function
-    getAllCollectionInfo().catch(console.error);
+    getCollection().catch(console.error);
 
   }, [])
   return (
@@ -135,7 +135,7 @@ function Tahsilat() {
                   </thead>
                   <tbody>
                   {
-                            allCollections.map((data) => (
+                            collection.map((data) => (
                               <>
                                 <tr>
                                   <td></td>
