@@ -56,7 +56,7 @@ function YeniMusteri() {
       let response = await axios.get(
         'https://private-fa826-sehir.apiary-mock.com/Sehir'
       );
-
+ 
       //console.log("getAllUserInfo" + response.data.CityList);
 
       setCities(response.data.CityList);
