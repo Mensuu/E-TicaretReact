@@ -21,12 +21,11 @@ function Siparis() {
     
     const getAllOrderInfo = async () => {
       let response = await axios.get(
-        'https://private-6cd1c-siparis.apiary-mock.com/Siparis'
+        //'https://private-6cd1c-siparis.apiary-mock.com/Siparis'
+        'http://localhost:5193/Siparis'
       );
 
-      console.log("getAllOrderInfo" + response.data.OrderList);
-
-      setAllOrders(response.data.OrderList);
+      setAllOrders(response.data);
 
     }
 
@@ -348,12 +347,12 @@ function Siparis() {
                               <>
                                 <tr>
                                   <td></td>
-                                  <td>{data.SiparisVeren}</td>
-                                  <td>{data.SiparisTarihi}</td>
-                                  <td>{data.ParaBirimi}</td>
-                                  <td>{data.ToplamTutar}</td>
-                                  <td>{data.SiparisDetayları}</td>
-                                  <td>{data.SiparisDurumu}</td>
+                                  <td>{data.siparisVeren}</td>
+                                  <td>{data.siparisTarihi}</td>
+                                  <td>{data.paraBirimi}</td>
+                                  <td>{data.toplamTutar}</td>
+                                  <td>{data.siparisDetayları}</td>
+                                  <td>{data.siparisDurumu}</td>
                                 </tr>
                               </>
                             )

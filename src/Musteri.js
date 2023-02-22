@@ -21,16 +21,13 @@ function Musteri() {
    
     const getAllCustomerInfo = async () => {
         let response = await axios.get(
-            'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+            //'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+              'http://localhost:5193/Musteri'
             );
     
-            //console.log("getAllUserInfo" + response.data.CustomerList);
-
-            setAllCustomers(response.data.CustomerList);
+            setAllCustomers(response.data);
 
     }
-
-    // call the function
     getAllCustomerInfo().catch(console.error);
  
   }, [])
@@ -351,12 +348,12 @@ function Musteri() {
                               <>
                                 <tr>
                                   <td></td>
-                                  <td>{data.MusteriAdi}</td>
-                                  <td>{data.MusteriSoyadi}</td>
-                                  <td>{data.Cinsiyet}</td>
-                                  <td>{data.DogumTarihi}</td>
-                                  <td>{data.Adres}</td>
-                                  <td>{data.Sehir}</td>
+                                  <td>{data.musteriAdi}</td>
+                                  <td>{data.musteriSoyadi}</td>
+                                  <td>{data.cinsiyet}</td>
+                                  <td>{data.dogumTarihi}</td>
+                                  <td>{data.adres}</td>
+                                  <td>{data.sehir}</td>
                                 </tr>
                               </>
                             )

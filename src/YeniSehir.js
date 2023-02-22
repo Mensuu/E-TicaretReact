@@ -14,18 +14,19 @@ function YeniSehir() {
   const myButtonClick = async () => {
 
     let requestBody = {
-      Sehir: city
+      sehir: city
     }
 
     const response = await axios.post(
-      'https://private-fa826-sehir.apiary-mock.com/Sehir',
+      //'https://private-fa826-sehir.apiary-mock.com/Sehir',
+      'http://localhost:5193/Sehir',
       requestBody
     );
 
 
     //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
 
-    let data = response.data.message;
+    let data = response.data;
     alert(data);
     navigate('/Sehir', { replace: true });
 

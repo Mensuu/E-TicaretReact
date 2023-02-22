@@ -16,21 +16,25 @@ function YeniUrun() {
   const [currency, setCurrency] = useState([]);
   const [stockQuantity, setStockQuantity] = useState([]);
   const [explanation, setExplanation] = useState([]);
+  const [productCategory, setProductCategory] = useState([]);
 
   const [currencies, setCurrencies] = useState([]);
+  const [productCategories, setProductCategories] = useState([]);
 
   const myButtonClick = async () => {
 
     let requestBody = {
-      UrunAdi: productName,
-      UrunKodu: code,
-      ParaBirimi: price,
-      ParaBirimi: currency,
-      Stok: stockQuantity,
-      Aciklama: explanation
+      urunAdi: productName,
+      urunKodu: code,
+      paraBirimi: price,
+      paraBirimi: currency,
+      stok: stockQuantity,
+      aciklama: explanation,
+      urunKategorisi: productCategory
     }
     const response = await axios.post(
-      'https://private-b305d-meneksecorum.apiary-mock.com/Musteri',
+      //'https://private-b305d-meneksecorum.apiary-mock.com/Musteri',
+      'http://localhost:5193/Urun',
       requestBody
     );
 
@@ -58,6 +62,15 @@ function YeniUrun() {
     }
 
     getCurrencies().catch(console.error);
+
+    const getProductCategories = async () => {
+      let response = await axios.get(
+        'https://private-a42220-urunkategorisi.apiary-mock.com/UrunKategorisi'
+      );
+      setProductCategories(response.data.ProductCategoryList);
+    }
+
+    getProductCategories().catch(console.error);
  
   }, [])
 
@@ -450,6 +463,26 @@ function YeniUrun() {
                           onChange={e => setExplanation(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
+                      </div>
+                    </div>
+                    <div className="form-group form-md-line-input">
+                      <label
+                        className="col-md-2 control-label"
+                        htmlFor="form_control_1"
+                      >
+                        Ürün Kategorisi
+                      </label>
+                      <div className="col-md-10">
+                        <select className="form-control" id="form_control_1" onChange={e => setProductCategory(e.target.value)}>
+                          <option value="">Lütfen seçiniz..</option>
+                          {
+                            productCategories.map((data) => (
+                              <option value={data.UrunKategorisiID}>{data.UrunKategorisi}</option>
+
+                            )
+                            )
+                          }
+                        </select>
                       </div>
                     </div>
                   </div>

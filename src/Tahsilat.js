@@ -21,12 +21,13 @@ function Tahsilat() {
     
     const getCollection = async () => {
       let response = await axios.get(
-        'https://private-07d350-tahsilat.apiary-mock.com/Tahsilat'
+        //'https://private-07d350-tahsilat.apiary-mock.com/Tahsilat'
+        'http://localhost:5193/Tahsilat'
       );
 
-      console.log("getAllPaymentInfo" + response.data.CollectionList);
+      //console.log("getAllPaymentInfo" + response.data.CollectionList);
 
-      setCollection(response.data.CollectionList);
+      setCollection(response.data);
 
     }
 
@@ -139,11 +140,11 @@ function Tahsilat() {
                               <>
                                 <tr>
                                   <td></td>
-                                  <td>{data.Musteri}</td>
-                                  <td>{data.ParaBirimi}</td>
-                                  <td>{data.ToplamTutar}</td>
+                                  <td>{data.musteri}</td>
+                                  <td>{data.paraBirimi}</td>
+                                  <td>{data.toplamTutar}</td>
                                   <td>{data.İlgiliSiparis}</td>
-                                  <td>{data.TahsilatTipi}</td>
+                                  <td>{data.tahsilatTipi}</td>
                                 </tr>
                               </>
                             )

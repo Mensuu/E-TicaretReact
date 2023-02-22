@@ -23,23 +23,24 @@ function YeniMusteri() {
   const myButtonClick = async () => {
 
     let requestBody = {
-      MusteriAdi: name,
-      MusteriSoyadi: surname,
-      DogumTarihi: birthday,
-      Cinsiyet: gender,
-      Adres: address,
-      Sehir: city
+      musteriAdi: name,
+      musteriSoyadi: surname,
+      dogumTarihi: birthday,
+      cinsiyet: gender,
+      adres: address,
+      sehir: city
     }
 
     const response = await axios.post(
-      'https://private-b305d-meneksecorum.apiary-mock.com/Musteri',
+      //'https://private-b305d-meneksecorum.apiary-mock.com/Musteri',
+      'http://localhost:5193/Musteri',
       requestBody
     );
 
 
     //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
 
-    let data = response.data.message;
+    let data = response.data;
     alert(data);
     navigate('/Musteri', { replace: true });
 
@@ -453,20 +454,19 @@ function YeniMusteri() {
                             <div className="md-radio-inline">
                               {
                                 genders.map((data) => (
-
-
                                   <div className="md-radio">
                                     <input
                                       type="radio"
                                       id={data.CinsiyetID}
                                       name="rdGender"
                                       className="md-radiobtn"
-                                      onChange={e => setGender(e.target.value)}
+                                      onChange={e => setGender(data.CinsiyetID)}
                                     />
-                                    <label htmlFor={data.CinsiyetID} >{data.Cinsiyet}
+                                    <label htmlFor={data.CinsiyetID} >
                                       <span />
                                       <span className="check" />
                                       <span className="box" />
+                                      {data.Cinsiyet} {" "}
                                     </label>
                                   </div>
                                 )

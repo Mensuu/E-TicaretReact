@@ -15,18 +15,18 @@ function YeniTahsilatTipi() {
   const myButtonClick = async () => {
 
     let requestBody = {
-      TahsilatTipi: collectionType
+      tahsilatTipi: collectionType
     }
 
     const response = await axios.post(
-      'https://private-6cd1c-siparis.apiary-mock.com/Siparis',
+      'http://localhost:5193/TahsilatTipi',
       requestBody
     );
 
 
     //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
 
-    let data = response.data.message;
+    let data = response.data;
     alert(data);
     navigate('/TahsilatTipi', { replace: true });
 

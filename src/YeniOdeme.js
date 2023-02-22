@@ -24,22 +24,23 @@ function YeniOdeme() {
   const myButtonClick = async() => {
     
     let requestBody = {
-      Kime:toWho,
-      OdemeTarihi:paymentDate,
-      ParaBirimi:currency,
-      ToplamTutar:totalAmount,
-      OdemeKanalı:paymentChannel,
-      Acıklama:explanation
+      kime:toWho,
+      odemeTarihi:paymentDate,
+      paraBirimi:currency,
+      toplamTutar:totalAmount,
+      odemeKanalı:paymentChannel,
+      acıklama:explanation
     }
 
     const response = await axios.post (
-      'https://private-67bb4c-odeme.apiary-mock.com/Odeme',
+      //'https://private-67bb4c-odeme.apiary-mock.com/Odeme',
+      'http://localhost:5193/Odeme',
       requestBody
     );
 
     //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
 
-    let data = response.data.message;
+    let data = response.data;
     alert(data);
     navigate('/Odeme' , {replace : true});
 

@@ -20,26 +20,28 @@ function YeniTahsilat() {
   const [customers, setCustomers] = useState([]);
   const [currencies, setCurrencies] = useState([]);
   const [products, setProducts] = useState([]);
+  const [collectionTypes, setCollectionTypes] = useState([]);
 
   const myButtonClick = async () => {
 
     let requestBody = {
-      Musteri: customer,
-      ParaBirimi: currency,
-      ToplamTutar: totalAmount,
+      musteri: customer,
+      paraBirimi: currency,
+      toplamTutar: totalAmount,
       İlgiliSiparis: order,
-      TahsilatTipi: collectionType
+      tahsilatTipi: collectionType
     }
 
     const response = await axios.post(
-      'https://private-07d350-tahsilat.apiary-mock.com/Tahsilat',
+      //'https://private-07d350-tahsilat.apiary-mock.com/Tahsilat',
+      'http://localhost:5193/Tahsilat',
       requestBody
     );
 
 
     //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
 
-    let data = response.data.message;
+    let data = response.data;
     alert(data);
     navigate('/Tahsilat', { replace: true });
 
@@ -83,6 +85,16 @@ function YeniTahsilat() {
 
     }
     getProducts().catch(console.error);
+
+    const getCollectionTypes = async () => {
+      let response = await axios.get(
+        'https://private-b9327-tahsilattipi.apiary-mock.com/TahsilatTipi'
+      );
+
+      setCollectionTypes(response.data.CollectionTypeList);
+
+    }
+    getCollectionTypes().catch(console.error);
  
   }, [])
   
@@ -460,14 +472,15 @@ function YeniTahsilat() {
                         Tahsilat Tipi
                       </label>
                       <div className="col-md-10">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="form_control_1"
-                          placeholder="GG/AA/YYYY"
-                          onChange={e => setCollectionType(e.target.value)}
-                        />
-                        <div className="form-control-focus"></div>
+                        <select className="form-control" id="form_control_1" onChange={e => setCollectionType(e.target.value)}>
+                          <option value="">Lütfen seçiniz..</option>
+                          {
+                                collectionTypes.map((data) => (
+                                  <option value={data.TahsilatTipiID}>{data.TahsilatTipi}</option>
+                                )
+                                )
+                              }
+                        </select>
                       </div>
                     </div>
                     </div>

@@ -21,12 +21,11 @@ function Sehir() {
 
     const getCity = async () => {
       let response = await axios.get(
-        'https://private-fa826-sehir.apiary-mock.com/Sehir'
+        //'https://private-fa826-sehir.apiary-mock.com/Sehir'
+        'http://localhost:5193/Sehir'
       );
 
-      console.log("getCity" + response.data.CityList);
-
-      setCity(response.data.CityList);
+      setCity(response.data);
 
     }
 
@@ -344,7 +343,7 @@ function Sehir() {
                               <>
                                 <tr>
                                   <td></td>
-                                  <td>{data.Sehir}</td>
+                                  <td>{data.sehir}</td>
                                 </tr>
                               </>
                             )

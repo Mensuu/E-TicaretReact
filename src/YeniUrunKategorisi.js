@@ -15,18 +15,19 @@ function YeniUrunKategorisi() {
   const myButtonClick = async () => {
 
     let requestBody = {
-      UrunKategorisi: productCategory
+      urunKategorisi: productCategory
     }
 
     const response = await axios.post(
-      'https://private-6cd1c-siparis.apiary-mock.com/Siparis',
+      //'https://private-a42220-urunkategorisi.apiary-mock.com/UrunKategorisi',
+      'http://localhost:5193/UrunKategorisi',
       requestBody
     );
 
 
     //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
 
-    let data = response.data.message;
+    let data = response.data;
     alert(data);
     navigate('/UrunKategorisi', { replace: true });
   }

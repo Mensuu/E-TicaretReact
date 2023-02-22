@@ -21,12 +21,13 @@ function Urun() {
 
     const getAllProductInfo = async () => {
       let response = await axios.get(
-        'https://private-b49dc1-urun3.apiary-mock.com/Urun'
+        //'https://private-b49dc1-urun3.apiary-mock.com/Urun'
+        'http://localhost:5193/Urun'
       );
 
-      console.log("getAllProductInfo" + response.data.ProductList);
+      console.log("getAllProductInfo" + response.data);
 
-      setAllProducts(response.data.ProductList);
+      setAllProducts(response.data);
 
     }
 
@@ -248,16 +249,19 @@ function Urun() {
                                 Kodu
                               </th>
                               <th>
-                                Fiyatı
+                                Para Birimi
                               </th>
                               <th>
-                                Para Birimi
+                                Fiyatı
                               </th>
                               <th>
                                 Stok Adeti
                               </th>
                               <th>
                                 Açıklama
+                              </th>
+                              <th>
+                                Ürün Kategorisi
                               </th>
                             </tr>
                           </thead>
@@ -267,12 +271,13 @@ function Urun() {
                               <>
                                 <tr>
                                   <td></td>
-                                  <td>{data.UrunAdi}</td>
-                                  <td>{data.UrunKodu}</td>
-                                  <td>{data.ParaBirimi}</td>
-                                  <td>{data.Fiyati}</td>
-                                  <td>{data.Stok}</td>
-                                  <td>{data.Aciklama}</td>
+                                  <td>{data.urunAdi}</td>
+                                  <td>{data.urunKodu}</td>
+                                  <td>{data.paraBirimi}</td>
+                                  <td>{data.fiyati}</td>
+                                  <td>{data.stok}</td>
+                                  <td>{data.aciklama}</td>
+                                  <td>{data.urunKategorisi}</td>
                                 </tr>
                               </>
                             )

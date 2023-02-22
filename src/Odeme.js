@@ -21,12 +21,13 @@ function Odeme() {
     
     const getAllPaymentInfo = async () => {
       let response = await axios.get(
-        'https://private-67bb4c-odeme.apiary-mock.com/Odeme'
+        //'https://private-67bb4c-odeme.apiary-mock.com/Odeme'
+        'http://localhost:5193/Odeme'
       );
 
-      console.log("getAllPaymentInfo" + response.data.PaymentList);
+      //console.log("getAllPaymentInfo" + response.data.PaymentList);
 
-      setAllPayments(response.data.PaymentList);
+      setAllPayments(response.data);
 
     }
 
@@ -349,12 +350,12 @@ function Odeme() {
                               <>
                                 <tr>
                                   <td></td>
-                                  <td>{data.Kime}</td>
-                                  <td>{data.OdemeTarihi}</td>
-                                  <td>{data.ParaBirimi}</td>
-                                  <td>{data.ToplamTutar}</td>
-                                  <td>{data.OdemeKanali}</td>
-                                  <td>{data.Aciklama}</td>
+                                  <td>{data.kime}</td>
+                                  <td>{data.odemeTarihi}</td>
+                                  <td>{data.paraBirimi}</td>
+                                  <td>{data.toplamTutar}</td>
+                                  <td>{data.odemeKanali}</td>
+                                  <td>{data.aciklama}</td>
                                 </tr>
                               </>
                             )

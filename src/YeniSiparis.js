@@ -5,6 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import { data } from 'jquery';
 
 
 function YeniSiparis() {
@@ -25,23 +26,24 @@ function YeniSiparis() {
   const myButtonClick = async () => {
 
     let requestBody = {
-      SiparisVeren: orderer,
-      SiparisTarihi: orderDate,
-      ParaBirimi: currency,
-      ToplamTutar: totalAmount,
-      SiparisDetayları: orderDetails,
-      SiparisDurumu: orderStatus
+      siparisVeren: orderer,
+      siparisTarihi: orderDate,
+      paraBirimi: currency,
+      toplamTutar: totalAmount,
+      siparisDetayları: orderDetails,
+      siparisDurumu: orderStatus
     }
 
     const response = await axios.post(
-      'https://private-6cd1c-siparis.apiary-mock.com/Siparis',
+      //'https://private-6cd1c-siparis.apiary-mock.com/Siparis',
+      'http://localhost:5193/Siparis',
       requestBody
     );
 
 
     //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
 
-    let data = response.data.message;
+    let data = response.data;
     alert(data);
     navigate('/Siparis', { replace: true });
 
@@ -382,7 +384,7 @@ function YeniSiparis() {
                         Siparişi Veren
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1" onChange={e => setOrderer(e.target.value)}>
+                        <select className="form-control" id="form_control_1" onChange={e => setOrderer(data.MusteriID)}>
                           <option value="">Lütfen seçiniz..</option>
                           {
                                 orderers.map((data) => (

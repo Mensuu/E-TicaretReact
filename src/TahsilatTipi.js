@@ -21,12 +21,13 @@ function TahsilatTipi() {
 
     const getCollectionType= async () => {
       let response = await axios.get(
-        'https://private-b9327-tahsilattipi.apiary-mock.com/TahsilatTipi'
+        //'https://private-b9327-tahsilattipi.apiary-mock.com/TahsilatTipi'
+        'http://localhost:5193/TahsilatTipi'
       );
 
-      console.log("getCollectionType" + response.data.CollectionTypeList);
+      //console.log("getCollectionType" + response.data.CollectionTypeList);
 
-      setCollectionType(response.data.CollectionTypeList);
+      setCollectionType(response.data);
 
     }
 
@@ -344,7 +345,7 @@ function TahsilatTipi() {
                               <>
                                 <tr>
                                   <td></td>
-                                  <td>{data.TahsilatTipi}</td>
+                                  <td>{data.tahsilatTipi}</td>
                                 </tr>
                               </>
                             )
