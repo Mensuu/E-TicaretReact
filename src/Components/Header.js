@@ -11,11 +11,13 @@ function Header() {
       <div className="container">
         {/* BEGIN LOGO */}
         <div className="page-logo">
-          <a href="index.html">
+          <a href="/">
             <img
-              src="assets/admin/layout3/img/logo-default.png"
+              src="assets/admin/layout3/img/mensu4.jpeg"
               alt="logo"
               className="logo-default"
+              width={100}
+              height={40}
             />
           </a>
         </div>
@@ -466,7 +468,7 @@ function Header() {
                 <img
                   alt=""
                   className="img-circle"
-                  src="assets/admin/layout3/img/avatar9.jpg"
+                  src="assets/admin/layout3/img/avatar.jpg"
                 />
                 <span className="username username-hide-mobile">{localStorage.getItem("userName")}</span>
               </a>
@@ -500,7 +502,7 @@ function Header() {
                   </a>
                 </li>
                 <li>
-                  <a href="login.html">
+                  <a href="/Logout">
                     <i className="icon-key" /> Log Out{" "}
                   </a>
                 </li>
