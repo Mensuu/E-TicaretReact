@@ -12,6 +12,19 @@ function Urun() {
   const [allProducts, setAllProducts] = useState([]);
   const navigate = useNavigate();
 
+  const myDeleteClick = async (urunId) => {
+    axios.delete(`http://localhost:5193/Urun?vm=${urunId}`)
+      .then(response => {
+        alert("Kişi silindi." + response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    window.location.reload();
+    navigate('/Urun', { replace: true })
+  }
+
   useEffect(() => {
 
     if (!localStorage.getItem("userName"))
@@ -49,8 +62,10 @@ function Urun() {
             <div className="container">
               {/* BEGIN PAGE TITLE */}
               <div className="page-title">
-                <h1>ÜRÜN LİSTE</h1>
-              </div>
+              <h1>
+                Ürün <small>Liste</small>
+              </h1>
+            </div>
               {/* END PAGE TITLE */}
               {/* BEGIN PAGE TOOLBAR */}
               <div className="page-toolbar">
@@ -197,18 +212,18 @@ function Urun() {
               {/* END SAMPLE PORTLET CONFIGURATION MODAL FORM*/}
               {/* BEGIN PAGE BREADCRUMB */}
               <ul className="page-breadcrumb breadcrumb">
-                <li>
-                  <a href="#">TANIMLAR</a><i className="fa fa-circle" />
-                </li>
-                <li>
-                  <a href="#">ÜRÜN</a>
-                  <i className="fa fa-circle" />
-                </li>
-                <li>
-                  <a href="/Urun">LİSTE</a>
-                  <i className="fa fa-circle" />
-                </li>
-              </ul>
+              <li>
+                <a href="#">Tanımlar</a>
+                <i className="fa fa-circle" />
+              </li>
+              <li>
+                <a href="#">Ürün</a>
+                <i className="fa fa-circle" />
+              </li>
+              <li>
+                <a href="/Urun">Liste</a>
+              </li>
+            </ul>
               {/* END PAGE BREADCRUMB */}
               {/* BEGIN PAGE CONTENT INNER */}
               <div className="row">
@@ -278,6 +293,7 @@ function Urun() {
                                   <td>{data.stok}</td>
                                   <td>{data.aciklama}</td>
                                   <td>{data.urunKategorisi}</td>
+                                  <td type="button" className="btn blue" onClick={()=>myDeleteClick(data.urunId)}>Sil</td>
                                 </tr>
                               </>
                             )

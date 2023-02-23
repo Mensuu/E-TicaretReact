@@ -28,8 +28,8 @@ function YeniOdeme() {
       odemeTarihi:paymentDate,
       paraBirimi:currency,
       toplamTutar:totalAmount,
-      odemeKanalı:paymentChannel,
-      acıklama:explanation
+      odemeKanali:paymentChannel,
+      aciklama:explanation
     }
 
     const response = await axios.post (
@@ -55,27 +55,32 @@ function YeniOdeme() {
     
     const getCustomers = async () => {
       let response = await axios.get(
-          'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+          //'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+          'http://localhost:5193/Musteri'
           );
-          setCustomers(response.data.CustomerList);
+          setCustomers(response.data);
 
     }
     getCustomers().catch(console.error);
 
     const getCurrencies = async () => {
       let response = await axios.get(
-          'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+          //'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+          //'http://localhost:5193/menekse/api/RefData/ParaBirimi'
+          'http://localhost:5193/menekse/api/RefData/GetParams?paramID=1'
           );
-          setCurrencies(response.data.CurrencyList);
+          setCurrencies(response.data);
 
     }
     getCurrencies().catch(console.error);
 
     const getPaymentChannels = async () => {
       let response = await axios.get(
-          'https://private-9dd9b4-odemekanali.apiary-mock.com/OdemeKanali'
+          //'https://private-9dd9b4-odemekanali.apiary-mock.com/OdemeKanali'
+          //'http://localhost:5193/menekse/api/RefData/OdemeKanali'
+          'http://localhost:5193/menekse/api/RefData/GetParams?paramID=3'
           );
-          setPaymentChannels(response.data.PaymentChannelList);
+          setPaymentChannels(response.data);
 
     }
     getPaymentChannels().catch(console.error);
@@ -387,7 +392,7 @@ function YeniOdeme() {
                         <option value="">Lütfen seçiniz..</option>
                           {
                             customers.map((data) => (
-                              <option value={data.MusteriID}>{data.MusteriAdi}</option>
+                              <option value={data.musteriId}>{data.musteriAdi}</option>
 
                             )
                             )
@@ -425,7 +430,7 @@ function YeniOdeme() {
                           <option value="">Lütfen seçiniz..</option>
                           {
                             currencies.map((data) => (
-                              <option value={data.ParaBirimiID}>{data.ParaBirimi}</option>
+                              <option value={data.value}>{data.text}</option>
 
                             )
                             )
@@ -445,7 +450,7 @@ function YeniOdeme() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
-                          placeholder="GG/AA/YYYY"
+                          placeholder="YYYY/AA/GG"
                           onChange={e => setPaymentDate(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
@@ -463,7 +468,7 @@ function YeniOdeme() {
                         <option value="">Lütfen seçiniz..</option>
                           {
                             paymentChannels.map((data) => (
-                              <option value={data.OdemeKanaliID}>{data.OdemeKanali}</option>
+                              <option value={data.value}>{data.text}</option>
 
                             )
                             )

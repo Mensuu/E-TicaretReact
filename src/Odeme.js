@@ -11,6 +11,18 @@ import Footer from "./Components/Footer";
 function Odeme() {
   const [allPayments, setAllPayments] = useState([]);
   const navigate = useNavigate();
+  const myDeleteClick = async (odemeId) => {
+    axios.delete(`http://localhost:5193/Odeme?vm=${odemeId}`)
+      .then(response => {
+        alert("Kişi silindi." + response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    window.location.reload();
+    navigate('/Odeme', { replace: true })
+  }
 
   useEffect(() => {
 
@@ -356,6 +368,7 @@ function Odeme() {
                                   <td>{data.toplamTutar}</td>
                                   <td>{data.odemeKanali}</td>
                                   <td>{data.aciklama}</td>
+                                  <td type="button" className="btn blue" onClick={()=>myDeleteClick(data.odemeId)}>Sil</td>
                                 </tr>
                               </>
                             )

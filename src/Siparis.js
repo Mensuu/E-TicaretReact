@@ -12,6 +12,19 @@ function Siparis() {
   const [allOrders, setAllOrders] = useState([]);
   const navigate = useNavigate();
 
+  const myDeleteClick = async (siparisId) => {
+    axios.delete(`http://localhost:5193/Siparis?vm=${siparisId}`)
+      .then(response => {
+        alert("Kişi silindi." + response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    window.location.reload();
+    navigate('/Siparis', { replace: true })
+  }
+
   useEffect(() => {
 
     if (!localStorage.getItem("userName"))
@@ -353,6 +366,7 @@ function Siparis() {
                                   <td>{data.toplamTutar}</td>
                                   <td>{data.siparisDetayları}</td>
                                   <td>{data.siparisDurumu}</td>
+                                  <td type="button" className="btn blue" onClick={()=>myDeleteClick(data.siparisId)}>Sil</td>
                                 </tr>
                               </>
                             )

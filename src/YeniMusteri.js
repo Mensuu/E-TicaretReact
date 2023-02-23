@@ -25,8 +25,8 @@ function YeniMusteri() {
     let requestBody = {
       musteriAdi: name,
       musteriSoyadi: surname,
-      dogumTarihi: birthday,
       cinsiyet: gender,
+      dogumTarihi: birthday,
       adres: address,
       sehir: city
     }
@@ -44,8 +44,9 @@ function YeniMusteri() {
     alert(data);
     navigate('/Musteri', { replace: true });
 
+   
 
-  }
+    };
 
   useEffect(() => {
 
@@ -55,32 +56,37 @@ function YeniMusteri() {
 
     const getCities = async () => {
       let response = await axios.get(
-        'https://private-fa826-sehir.apiary-mock.com/Sehir'
+        //'https://private-fa826-sehir.apiary-mock.com/Sehir'
+        //'http://localhost:5193/Sehir'
+        'http://localhost:5193/menekse/api/RefData/GetParams?paramID=4'
       );
- 
+
       //console.log("getAllUserInfo" + response.data.CityList);
 
-      setCities(response.data.CityList);
+      setCities(response.data);
 
     }
 
+    getCities().catch(console.error);
 
     const getGenders = async () => {
       let response = await axios.get(
-        'https://private-c52218-cinsiyet1.apiary-mock.com/Cinsiyet'
+        //'https://private-c52218-cinsiyet1.apiary-mock.com/Cinsiyet'
+        //'http://localhost:5193/menekse/api/RefData/Cinsiyet'
+        'http://localhost:5193/menekse/api/RefData/GetParams?paramID=2'
       );
 
       //console.log("getAllUserInfo" + response.data.GenderList);
 
-      setGenders(response.data.GenderList);
+      setGenders(response.data);
 
     }
 
-    // call the function
-    getCities().catch(console.error);
+
     getGenders().catch(console.error);
 
   }, [])
+
 
 
   return (
@@ -436,7 +442,7 @@ function YeniMusteri() {
                               type="text"
                               className="form-control"
                               id="form_control_1"
-                              placeholder="GG/AA/YYYY"
+                              placeholder="YYYY/AA/GG"
                               name="dtBirthDate"
                               onChange={e => setBirthday(e.target.value)}
                             />
@@ -457,16 +463,16 @@ function YeniMusteri() {
                                   <div className="md-radio">
                                     <input
                                       type="radio"
-                                      id={data.CinsiyetID}
+                                      id={data.value}
                                       name="rdGender"
                                       className="md-radiobtn"
-                                      onChange={e => setGender(data.CinsiyetID)}
+                                      onChange={e => setGender(data.value)}
                                     />
-                                    <label htmlFor={data.CinsiyetID} >
+                                    <label htmlFor={data.value} >
                                       <span />
                                       <span className="check" />
                                       <span className="box" />
-                                      {data.Cinsiyet} {" "}
+                                      {data.text} {" "}
                                     </label>
                                   </div>
                                 )
@@ -492,7 +498,7 @@ function YeniMusteri() {
                               <option value="">Lütfen seçiniz..</option>
                               {
                                 cities.map((data) => (
-                                  <option value={data.SehirID}>{data.Sehir}</option>
+                                  <option value={data.value}>{data.text}</option>
                                 )
                                 )
                               }

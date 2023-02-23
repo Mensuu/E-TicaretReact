@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 function Header() {
     return (
   <>
+  
   {/* BEGIN HEADER */}
   <div className="page-header">
     {/* BEGIN HEADER TOP */}
@@ -551,7 +552,7 @@ function Header() {
               </a>
               <ul className="dropdown-menu pull-left">
                 <li className=" dropdown-submenu">
-                  <a href=":;">
+                  <a>
                     <i className="icon-user" />
                     Müşteri{" "}
                   </a>
@@ -565,7 +566,7 @@ function Header() {
                   </ul>
                 </li>
                 <li className=" dropdown-submenu">
-                  <a href=":;">
+                  <a>
                     <i className="icon-bar-chart" />
                     Ürün{" "}
                   </a>
@@ -591,11 +592,11 @@ function Header() {
               </a>
               <ul className="dropdown-menu pull-left">
                 <li className=" dropdown-submenu">
-                  <a href=":;">
+                  <a>
                     <i className="icon-briefcase" />
                     Sipariş{" "}
                   </a>
-                  <ul className="dropdown-menu">
+                  <ul className="dropdown-menu" >
                     <li className=" ">
                       <Link to="/Siparis">Sipariş Listesi </Link>
                     </li>
@@ -605,7 +606,7 @@ function Header() {
                   </ul>
                 </li>
                 <li className=" dropdown-submenu">
-                  <a href=":;">
+                  <a>
                     <i className="icon-bar-chart" />
                     Tahsilat{" "}
                   </a>
@@ -619,7 +620,7 @@ function Header() {
                   </ul>
                 </li>
                 <li className=" dropdown-submenu">
-                  <a href=":;">
+                  <a >
                     <i className="icon-pointer" />
                     Ödeme{" "}
                   </a>
@@ -645,7 +646,7 @@ function Header() {
               </a>
               <ul className="dropdown-menu pull-left">
                 <li className=" dropdown-submenu">
-                  <a href=":;">
+                  <a>
                     <i className="icon-briefcase" />
                     Sipariş Durumu{" "}
                   </a>
@@ -659,7 +660,7 @@ function Header() {
                   </ul>
                 </li>
                 <li className=" dropdown-submenu">
-                  <a href=":;">
+                  <a>
                     <i className="icon-bar-chart" />
                     Şehir{" "}
                   </a>
@@ -673,7 +674,7 @@ function Header() {
                   </ul>
                 </li>
                 <li className=" dropdown-submenu">
-                  <a href=":;">
+                  <a>
                     <i className="icon-pointer" />
                     Tahsilat Tipi{" "}
                   </a>
@@ -687,7 +688,7 @@ function Header() {
                   </ul>
                 </li>
                 <li className=" dropdown-submenu">
-                  <a href=":;">
+                  <a>
                     <i className="icon-puzzle" />
                     Ürün Kategorisi{" "}
                   </a>

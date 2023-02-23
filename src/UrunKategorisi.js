@@ -12,6 +12,19 @@ function UrunKategorisi() {
   const [productCategory, setProductCategory] = useState([]);
   const navigate = useNavigate();
 
+  const myDeleteClick = async (urunKategorisiId) => {
+    axios.delete(`http://localhost:5193/UrunKategorisi?vm=${urunKategorisiId}`)
+      .then(response => {
+        alert("Kişi silindi." + response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    window.location.reload();
+    navigate('/UrunKategorisi', { replace: true })
+  }
+
   useEffect(() => {
 
     if (!localStorage.getItem("userName"))
@@ -342,6 +355,7 @@ function UrunKategorisi() {
                                 <tr>
                                   <td></td>
                                   <td>{data.urunKategorisi}</td>
+                                  <td type="button" className="btn blue" onClick={()=>myDeleteClick(data.urunKategorisiId)}>Sil</td>
                                 </tr>
                               </>
                             )

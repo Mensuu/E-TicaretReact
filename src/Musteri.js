@@ -11,6 +11,33 @@ function Musteri() {
   const navigate = useNavigate();
 
   const[allCustomers, setAllCustomers] = useState([]);
+  
+  const myDeleteClick = async (musteriId) => {
+    axios.delete(`http://localhost:5193/Musteri?vm=${musteriId}`)
+      .then(response => {
+        alert("Kişi silindi." + response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    window.location.reload();
+    navigate('/Musteri', { replace: true })
+  }
+
+  const myUpdateClick = async (musteriId) => {
+    axios.update(`http://localhost:5193/Musteri?vm=${musteriId}`)
+      .then(response => {
+        alert("Kişi güncellendi." + response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    window.location.reload();
+    navigate('/YeniMusteri', { replace: true })
+  }
+
 
   useEffect(() => {
 
@@ -354,6 +381,8 @@ function Musteri() {
                                   <td>{data.dogumTarihi}</td>
                                   <td>{data.adres}</td>
                                   <td>{data.sehir}</td>
+                                  <td type="button" className="btn blue" onClick={()=>myDeleteClick(data.musteriId)}>Sil</td>
+                                  <td type="button" className="btn blue" onClick={()=>myUpdateClick(data.musteriId)}>Güncelle</td>
                                 </tr>
                               </>
                             )

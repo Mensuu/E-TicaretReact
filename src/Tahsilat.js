@@ -12,6 +12,19 @@ function Tahsilat() {
   const [collection, setCollection] = useState([]);
   const navigate = useNavigate();
 
+  const myDeleteClick = async (tahsilatId) => {
+    axios.delete(`http://localhost:5193/Tahsilat?vm=${tahsilatId}`)
+      .then(response => {
+        alert("Kişi silindi." + response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    window.location.reload();
+    navigate('/Tahsilat', { replace: true })
+  }
+
   useEffect(() => {
 
     if (!localStorage.getItem("userName"))
@@ -145,6 +158,7 @@ function Tahsilat() {
                                   <td>{data.toplamTutar}</td>
                                   <td>{data.İlgiliSiparis}</td>
                                   <td>{data.tahsilatTipi}</td>
+                                  <td type="button" className="btn blue" onClick={()=>myDeleteClick(data.tahsilatId)}>Sil</td>
                                 </tr>
                               </>
                             )

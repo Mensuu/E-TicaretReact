@@ -26,9 +26,9 @@ function YeniTahsilat() {
 
     let requestBody = {
       musteri: customer,
-      paraBirimi: currency,
       toplamTutar: totalAmount,
-      İlgiliSiparis: order,
+      paraBirimi: currency,
+      urunAdi: order,
       tahsilatTipi: collectionType
     }
 
@@ -58,40 +58,47 @@ function YeniTahsilat() {
 
     const getCustomers = async () => {
       let response = await axios.get(
-        'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+        //'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+        'http://localhost:5193/Musteri'
       );
 
-      setCustomers(response.data.CustomerList);
+      setCustomers(response.data);
 
     }
     getCustomers().catch(console.error);
 
     const getCurrencies = async () => {
       let response = await axios.get(
-        'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+        //'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+
+        //'http://localhost:5193/api/RefData/ParaBirimi'
+        'http://localhost:5193/menekse/api/RefData/GetParams?paramID=1'
+
       );
 
-      setCurrencies(response.data.CurrencyList);
+      setCurrencies(response.data);
 
     }
     getCurrencies().catch(console.error);
 
     const getProducts = async () => {
       let response = await axios.get(
-        'https://private-b49dc1-urun3.apiary-mock.com/Urun'
+        //'https://private-b49dc1-urun3.apiary-mock.com/Urun'
+        'http://localhost:5193/Urun'
       );
 
-      setProducts(response.data.ProductList);
+      setProducts(response.data);
 
     }
     getProducts().catch(console.error);
 
     const getCollectionTypes = async () => {
       let response = await axios.get(
-        'https://private-b9327-tahsilattipi.apiary-mock.com/TahsilatTipi'
+        //'https://private-b9327-tahsilattipi.apiary-mock.com/TahsilatTipi'
+        'http://localhost:5193/TahsilatTipi'
       );
 
-      setCollectionTypes(response.data.CollectionTypeList);
+      setCollectionTypes(response.data);
 
     }
     getCollectionTypes().catch(console.error);
@@ -401,7 +408,7 @@ function YeniTahsilat() {
                           <option value="">Lütfen seçiniz..</option>
                           {
                                 customers.map((data) => (
-                                  <option value={data.MusteriID}>{data.MusteriAdi}</option>
+                                  <option value={data.musteriId}>{data.musteriAdi}</option>
                                 )
                                 )
                               }
@@ -438,7 +445,7 @@ function YeniTahsilat() {
                           <option value="">Lütfen seçiniz..</option>
                           {
                                 currencies.map((data) => (
-                                  <option value={data.ParaBirimiID}>{data.ParaBirimi}</option>
+                                  <option value={data.value}>{data.text}</option>
                                 )
                                 )
                               }
@@ -457,7 +464,7 @@ function YeniTahsilat() {
                           <option value="">Lütfen seçiniz..</option>
                           {
                                 products.map((data) => (
-                                  <option value={data.UrunID}>{data.UrunAdi}</option>
+                                  <option value={data.urunId}>{data.urunAdi}</option>
                                 )
                                 )
                               }
@@ -476,7 +483,7 @@ function YeniTahsilat() {
                           <option value="">Lütfen seçiniz..</option>
                           {
                                 collectionTypes.map((data) => (
-                                  <option value={data.TahsilatTipiID}>{data.TahsilatTipi}</option>
+                                  <option value={data.tahsilatTipiId}>{data.tahsilatTipi}</option>
                                 )
                                 )
                               }

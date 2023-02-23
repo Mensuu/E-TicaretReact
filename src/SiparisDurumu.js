@@ -11,6 +11,20 @@ import Footer from "./Components/Footer";
 function SiparisDurumu() {
   const [allOrderStatuses, setAllOrderStatuses] = useState([]);
   const navigate = useNavigate();
+
+  const myDeleteClick = async (siparisDurumuId) => {
+    axios.delete(`http://localhost:5193/SiparisDurumu?vm=${siparisDurumuId}`)
+      .then(response => {
+        alert("Kişi silindi." + response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    window.location.reload();
+    navigate('/Musteri', { replace: true })
+  }
+
   useEffect(() => {
 
     if (!localStorage.getItem("userName"))
@@ -343,6 +357,7 @@ function SiparisDurumu() {
                                 <tr>
                                   <td></td>
                                   <td>{data.siparisDurumu}</td>
+                                  <td type="button" className="btn blue" onClick={()=>myDeleteClick(data.siparisDurumuId)}>Sil</td>
                                 </tr>
                               </>
                             )

@@ -12,6 +12,21 @@ function Sehir() {
   const [city, setCity] = useState([]);
   const navigate = useNavigate();
 
+  
+  const myDeleteClick = async (sehirId) => {
+    axios.delete(`http://localhost:5193/Sehir?vm=${sehirId}`)
+      .then(response => {
+        alert("Kişi silindi." + response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    window.location.reload();
+    navigate('/Sehir', { replace: true })
+  }
+
+
   useEffect(() => {
 
     if (!localStorage.getItem("userName"))
@@ -344,6 +359,7 @@ function Sehir() {
                                 <tr>
                                   <td></td>
                                   <td>{data.sehir}</td>
+                                  <td type="button" className="btn blue" onClick={()=>myDeleteClick(data.sehirId)}>Sil</td>
                                 </tr>
                               </>
                             )

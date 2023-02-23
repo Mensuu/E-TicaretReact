@@ -30,7 +30,7 @@ function YeniSiparis() {
       siparisTarihi: orderDate,
       paraBirimi: currency,
       toplamTutar: totalAmount,
-      siparisDetayları: orderDetails,
+      siparisDetaylari: orderDetails,
       siparisDurumu: orderStatus
     }
 
@@ -60,27 +60,30 @@ function YeniSiparis() {
 
     const getOrderers = async () => {
       let response = await axios.get(
-        'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+        //'https://private-b305d-meneksecorum.apiary-mock.com/Musteri'
+        'http://localhost:5193/Musteri'
       );
-      setOrderers(response.data.CustomerList);
+      setOrderers(response.data);
 
     }
     getOrderers().catch(console.error);
 
     const getCurrencies = async () => {
       let response = await axios.get(
-        'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+        //'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+        'http://localhost:5193/menekse/api/RefData/GetParams?paramID=1'
       );
-      setCurrencies(response.data.CurrencyList);
+      setCurrencies(response.data);
 
     }
     getCurrencies().catch(console.error);
 
     const getOrderStatuses = async () => {
       let response = await axios.get(
-        'https://private-266ca0-siparisdurumu.apiary-mock.com/SiparisDurumu'
+        //'https://private-266ca0-siparisdurumu.apiary-mock.com/SiparisDurumu'
+        'http://localhost:5193/SiparisDurumu'
       );
-      setOrderStatuses(response.data.OrderStatusList);
+      setOrderStatuses(response.data);
 
     }
     getOrderStatuses().catch(console.error);
@@ -384,11 +387,11 @@ function YeniSiparis() {
                         Siparişi Veren
                       </label>
                       <div className="col-md-10">
-                        <select className="form-control" id="form_control_1" onChange={e => setOrderer(data.MusteriID)}>
+                        <select className="form-control" id="form_control_1" onChange={e => setOrderer(e.target.value)}>
                           <option value="">Lütfen seçiniz..</option>
                           {
                                 orderers.map((data) => (
-                                  <option value={data.MusteriID}>{data.MusteriAdi}</option>
+                                  <option value={data.musteriId}>{data.musteriAdi}</option>
                                 )
                                 )
                               }
@@ -408,7 +411,7 @@ function YeniSiparis() {
                           type="text"
                           className="form-control"
                           id="form_control_1"
-                          placeholder="GG/AA/YYYY"
+                          placeholder="YYYY/AA/GG"
                           onChange={e => setOrderDate(e.target.value)}
                         />
                         <div className="form-control-focus"></div>
@@ -426,7 +429,7 @@ function YeniSiparis() {
                           <option value="">Lütfen seçiniz..</option>
                           {
                                 currencies.map((data) => (
-                                  <option value={data.ParaBirimiID}>{data.ParaBirimi}</option>
+                                  <option value={data.value}>{data.text}</option>
                                 )
                                 )
                               }
@@ -479,7 +482,7 @@ function YeniSiparis() {
                           <option value="">Lütfen seçiniz..</option>
                           {
                                 orderStatuses.map((data) => (
-                                  <option value={data.SiparisDurumuID}>{data.SiparisDurumu}</option>
+                                  <option value={data.siparisDurumuId}>{data.siparisDurumu}</option>
                                 )
                                 )
                               }

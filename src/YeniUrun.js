@@ -26,8 +26,8 @@ function YeniUrun() {
     let requestBody = {
       urunAdi: productName,
       urunKodu: code,
-      paraBirimi: price,
       paraBirimi: currency,
+      fiyati: price,
       stok: stockQuantity,
       aciklama: explanation,
       urunKategorisi: productCategory
@@ -41,7 +41,7 @@ function YeniUrun() {
 
     //alert("Service Request:" + JSON.stringify(requestBody) + " Service Response:" + JSON.stringify(response));
 
-    let data = response.data.message;
+    let data = response.data;
     alert(data);
     navigate('/Urun', { replace: true });
 
@@ -56,18 +56,20 @@ function YeniUrun() {
 
     const getCurrencies = async () => {
       let response = await axios.get(
-        'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+        //'https://private-9e3a46-yenimusteri.apiary-mock.com/ParaBirimi'
+        'http://localhost:5193/menekse/api/RefData/GetParams?paramID=1'
       );
-      setCurrencies(response.data.CurrencyList);
+      setCurrencies(response.data);
     }
 
     getCurrencies().catch(console.error);
 
     const getProductCategories = async () => {
       let response = await axios.get(
-        'https://private-a42220-urunkategorisi.apiary-mock.com/UrunKategorisi'
+        //'https://private-a42220-urunkategorisi.apiary-mock.com/UrunKategorisi'
+        'http://localhost:5193/UrunKategorisi'
       );
-      setProductCategories(response.data.ProductCategoryList);
+      setProductCategories(response.data);
     }
 
     getProductCategories().catch(console.error);
@@ -423,7 +425,7 @@ function YeniUrun() {
                           <option value="">Lütfen seçiniz..</option>
                           {
                             currencies.map((data) => (
-                              <option value={data.ParaBirimiID}>{data.ParaBirimi}</option>
+                              <option value={data.value}>{data.text}</option>
 
                             )
                             )
@@ -477,7 +479,7 @@ function YeniUrun() {
                           <option value="">Lütfen seçiniz..</option>
                           {
                             productCategories.map((data) => (
-                              <option value={data.UrunKategorisiID}>{data.UrunKategorisi}</option>
+                              <option value={data.urunKategorisiId}>{data.urunKategorisi}</option>
 
                             )
                             )
