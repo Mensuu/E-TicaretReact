@@ -519,7 +519,7 @@ function Header() {
     <div className="page-header-menu">
       <div className="container">
         {/* BEGIN HEADER SEARCH BOX */}
-        <form className="search-form" action="extra_search.html" method="GET">
+       {/* <form className="search-form" action="extra_search.html" method="GET" >
           <div className="input-group">
             <input
               type="text"

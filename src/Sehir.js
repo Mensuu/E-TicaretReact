@@ -16,7 +16,7 @@ function Sehir() {
   const myDeleteClick = async (sehirId) => {
     axios.delete(`http://localhost:5193/Sehir?vm=${sehirId}`)
       .then(response => {
-        alert("Kişi silindi." + response.data);
+        alert(response.data);
       })
       .catch(error => {
         console.log(error);

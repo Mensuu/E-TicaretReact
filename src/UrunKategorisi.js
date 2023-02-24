@@ -15,7 +15,7 @@ function UrunKategorisi() {
   const myDeleteClick = async (urunKategorisiId) => {
     axios.delete(`http://localhost:5193/UrunKategorisi?vm=${urunKategorisiId}`)
       .then(response => {
-        alert("Kişi silindi." + response.data);
+        alert(response.data);
       })
       .catch(error => {
         console.log(error);

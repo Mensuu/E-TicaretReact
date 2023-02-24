@@ -15,7 +15,7 @@ function Musteri() {
   const myDeleteClick = async (musteriId) => {
     axios.delete(`http://localhost:5193/Musteri?vm=${musteriId}`)
       .then(response => {
-        alert("Kişi silindi." + response.data);
+        alert(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -26,16 +26,20 @@ function Musteri() {
   }
 
   const myUpdateClick = async (musteriId) => {
-    axios.update(`http://localhost:5193/Musteri?vm=${musteriId}`)
-      .then(response => {
-        alert("Kişi güncellendi." + response.data);
+    axios.put(`http://localhost:5193/Musteri?vm=${musteriId}`)
+    
+    navigate('/YeniMusteri', { replace: true })
+    
+     .then(response => {
+        alert(response.data);
       })
       .catch(error => {
         console.log(error);
       });
 
     window.location.reload();
-    navigate('/YeniMusteri', { replace: true })
+    navigate('/Musteri', { replace: true })
+
   }
 
 

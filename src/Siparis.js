@@ -15,7 +15,7 @@ function Siparis() {
   const myDeleteClick = async (siparisId) => {
     axios.delete(`http://localhost:5193/Siparis?vm=${siparisId}`)
       .then(response => {
-        alert("Kişi silindi." + response.data);
+        alert(response.data);
       })
       .catch(error => {
         console.log(error);

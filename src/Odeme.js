@@ -14,7 +14,7 @@ function Odeme() {
   const myDeleteClick = async (odemeId) => {
     axios.delete(`http://localhost:5193/Odeme?vm=${odemeId}`)
       .then(response => {
-        alert("Kişi silindi." + response.data);
+        alert(response.data);
       })
       .catch(error => {
         console.log(error);

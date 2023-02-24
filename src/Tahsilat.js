@@ -15,7 +15,7 @@ function Tahsilat() {
   const myDeleteClick = async (tahsilatId) => {
     axios.delete(`http://localhost:5193/Tahsilat?vm=${tahsilatId}`)
       .then(response => {
-        alert("Kişi silindi." + response.data);
+        alert(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -156,7 +156,7 @@ function Tahsilat() {
                                   <td>{data.musteri}</td>
                                   <td>{data.paraBirimi}</td>
                                   <td>{data.toplamTutar}</td>
-                                  <td>{data.İlgiliSiparis}</td>
+                                  <td>{data.urunAdi}</td>
                                   <td>{data.tahsilatTipi}</td>
                                   <td type="button" className="btn blue" onClick={()=>myDeleteClick(data.tahsilatId)}>Sil</td>
                                 </tr>
